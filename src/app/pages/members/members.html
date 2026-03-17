@@ -1,0 +1,115 @@
+<app-sidebar>
+  <div class="members-container">
+    <div class="header">
+      <div>
+        <h1>Miembros</h1>
+        <p class="subtitle">Gestiona los miembros de tu gimnasio</p>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <div class="search-field">
+        <mat-icon>search</mat-icon>
+        <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar miembros...">
+      </div>
+      <button mat-flat-button class="btn-add">
+        <mat-icon>person_add</mat-icon> Agregar Miembro
+      </button>
+    </div>
+
+    <div class="table-container mat-elevation-z0">
+      <table mat-table [dataSource]="filteredMembers">
+
+        <!-- Miembro Column -->
+        <ng-container mat-columnDef="miembro">
+          <th mat-header-cell *matHeaderCellDef> MIEMBRO </th>
+          <td mat-cell *matCellDef="let m">
+            <div class="member-cell">
+              <div class="avatar-circle">
+                {{ getInitials(m) }}
+              </div>
+              <span class="member-name">{{ m.nombre }} {{ m.apellido }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Contacto Column -->
+        <ng-container mat-columnDef="contacto">
+          <th mat-header-cell *matHeaderCellDef> CONTACTO </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="contact-cell">
+              <div class="contact-item">
+                <mat-icon>mail_outline</mat-icon>
+                <span>{{ member.email || 'sin email' }}</span>
+              </div>
+              <div class="contact-item">
+                <mat-icon>phone_enabled</mat-icon>
+                <span>{{ member.telefono }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Membresia Column -->
+        <ng-container mat-columnDef="membresia">
+          <th mat-header-cell *matHeaderCellDef> MEMBRESÍA </th>
+          <td mat-cell *matCellDef="let member">
+            <span class="membership-badge">
+              <mat-icon>subtitles</mat-icon> Mensual
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Vigencia Column -->
+        <ng-container mat-columnDef="vigencia">
+          <th mat-header-cell *matHeaderCellDef> VIGENCIA </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="validity-cell">
+              <span>{{ member.fecha_registro }}</span>
+              <span class="validity-end">hasta 2025-01-01</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Estado Column -->
+        <ng-container mat-columnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+          <td mat-cell *matCellDef="let member">
+            <span class="status-badge" [ngClass]="member.estado">
+              {{ member.estado | titlecase }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Acciones Column -->
+        <ng-container mat-columnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="actions-cell">
+              <button mat-icon-button class="btn-edit"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button class="btn-delete"><mat-icon>delete</mat-icon></button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <div class="stats-footer">
+      <div class="stat-card">
+        <span class="stat-label">Total Miembros</span>
+        <span class="stat-value">{{ stats.total }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Activos</span>
+        <span class="stat-value text-green">{{ stats.activos }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Inactivos</span>
+        <span class="stat-value text-muted">{{ stats.inactivos }}</span>
+      </div>
+    </div>
+  </div>
+</app-sidebar>

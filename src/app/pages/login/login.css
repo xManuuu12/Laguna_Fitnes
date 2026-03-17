@@ -185,5 +185,16 @@ button mat-spinner{
   transform: translateY(-1px);
 }
 
+.error-message {
+  color: #ff5252;
+  background-color: rgba(255, 82, 82, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
 
 

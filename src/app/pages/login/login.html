@@ -7,6 +7,10 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
 
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
   <mat-form-field appearance="outline" class="full">
     <mat-label>Usuario</mat-label>
 

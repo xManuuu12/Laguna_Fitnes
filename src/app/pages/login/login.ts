@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -11,47 +11,60 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-selector: 'app-login',
-standalone: true,
- imports: [
-  CommonModule,
-  ReactiveFormsModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatButtonModule,
-  MatIconModule,
-  MatProgressSpinnerModule
-],
+  selector: 'app-login',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   loginForm: FormGroup;
   hidePassword = true;
   loading = false;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder,private router: Router) {
+  constructor() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onLogin() {
-
     if (this.loginForm.invalid) return;
 
     this.loading = true;
+    this.errorMessage = null;
 
-    setTimeout(() => {
-      console.log(this.loginForm.value);
-      this.router.navigate(['dashboard']);
-      this.loading = false;
-    }, 2000);
-
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.router.navigate(['dashboard']);
+        } else {
+          this.errorMessage = response.error || 'Credenciales inválidas';
+        }
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+        this.errorMessage = error.error?.error || 'Error al conectar con el servidor';
+        this.loading = false;
+      }
+    });
   }
-
 }

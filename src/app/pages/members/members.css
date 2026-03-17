@@ -1,0 +1,229 @@
+.members-container {
+  padding: 1.5rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1e293b;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.search-field {
+  position: relative;
+  flex: 1;
+  max-width: 450px;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.search-field mat-icon {
+  color: #94a3b8;
+  margin-right: 10px;
+}
+
+.search-field input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+.btn-add {
+  background-color: #10b981 !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 0.6rem 1.5rem !important;
+  font-weight: 600 !important;
+  height: 48px !important;
+}
+
+/* Table Styles */
+.table-container {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-header-cell {
+  background-color: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 1.2rem 1rem !important;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.mat-mdc-cell {
+  padding: 1.2rem 1rem !important;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f8fafc;
+}
+
+/* Custom Cells */
+.member-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #10b981;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.member-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.contact-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.contact-item mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.membership-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.membership-badge mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.validity-cell {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.validity-end {
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.activo {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge.vencido {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 4px;
+}
+
+.btn-edit { color: #64748b; }
+.btn-delete { color: #f87171; }
+
+/* Stats Footer */
+.stats-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.text-green { color: #10b981; }
+.text-muted { color: #94a3b8; }
