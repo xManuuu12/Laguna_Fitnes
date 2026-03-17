@@ -1,0 +1,114 @@
+<div class="dashboard-layout">
+  
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <mat-icon color="primary" class="brand-icon">fitness_center</mat-icon>
+      <h2>LagunaFitnes</h2>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a href="#" class="nav-item active">Dashboard</a>
+      <a href="#" class="nav-item">Miembros</a>
+      <a href="#" class="nav-item">Visitas</a>
+      <a href="#" class="nav-item">Analíticas</a>
+      <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i>Configuración</a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a href="#" class="nav-item">Cerrar Sesión</a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    
+    <header class="topbar">
+      <div class="search-bar">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" placeholder="Buscar miembro o documento...">
+      </div>
+      
+      <div class="topbar__actions">
+        <button mat-icon-button><mat-icon>notifications</mat-icon></button>
+        <div class="user-profile">
+          <img src="https://i.pravatar.cc/150?img=11" alt="Admin" class="avatar">
+          <span>Admin User</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      
+      <div class="content__header">
+        <div>
+          <h1>Resumen General</h1>
+          <p class="subtitle">Vista rápida de tu gimnasio hoy</p>
+        </div>
+        <div class="header-actions">
+          <button mat-stroked-button class="btn-outline">Nuevo Miembro</button>
+          <button mat-flat-button class="btn-primary">
+            <mat-icon>check_circle</mat-icon> Registrar Visita
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card" *ngFor="let stat of stats">
+          <div class="stat-icon-wrapper" [ngClass]="stat.iconClass">
+            <mat-icon>{{stat.icon}}</mat-icon>
+          </div>
+          <div class="stat-info">
+            <span class="stat-title">{{stat.title}}</span>
+            <div class="stat-value-row">
+              <span class="stat-value">{{stat.value}}</span>
+              <span class="stat-trend" [ngClass]="stat.isPositive ? 'trend-up' : 'trend-down'">
+                {{stat.trend}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-grid">
+        
+        <div class="card chart-card">
+          <div class="card-header">
+            <div>
+              <h3>Tendencia de Visitas</h3>
+              <p class="subtitle-small">Asistencia de miembros en los últimos 7 días</p>
+            </div>
+            <select class="custom-select">
+              <option>Esta semana</option>
+              <option>Este mes</option>
+            </select>
+          </div>
+          <div class="chart-placeholder">
+            <mat-icon style="font-size: 4rem; width: 4rem; height: 4rem; color: #cbd5e1;">insert_chart_outlined</mat-icon>
+            <p>Espacio reservado para la gráfica</p>
+          </div>
+        </div>
+
+        <div class="card visits-card">
+          <div class="card-header">
+            <h3>Visitas Recientes</h3>
+            <a href="#" class="link-primary">Ver todas</a>
+          </div>
+          
+          <div class="visits-list">
+            <div class="visit-item" *ngFor="let visit of recentVisits">
+              <img [src]="visit.avatar" alt="Avatar" class="visit-avatar">
+              <div class="visit-details">
+                <span class="visit-name">{{visit.name}}</span>
+                <span class="visit-plan">{{visit.plan}}</span>
+              </div>
+              <span class="visit-time">{{visit.time}}</span>
+            </div>
+          </div>
+
+          <button mat-stroked-button class="btn-full-width">Escanear Código QR</button>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+</div>
