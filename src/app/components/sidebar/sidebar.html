@@ -1,0 +1,52 @@
+<div class="dashboard-layout">
+  
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <mat-icon color="primary" class="brand-icon material-icons-outlined">fitness_center</mat-icon>
+      <h2>LagunaFitnes</h2>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <mat-icon>dashboard</mat-icon>Dashboard
+      </a>
+      <a href="#" class="nav-item">
+        <mat-icon>group</mat-icon>Miembros
+      </a>
+      <a href="#" class="nav-item">
+        <mat-icon>event_available</mat-icon>Visitas
+      </a>
+      <a href="#" class="nav-item">
+        <mat-icon>analytics</mat-icon>Analíticas
+      </a>
+      <a href="#" class="nav-item">
+        <mat-icon>settings</mat-icon>Configuración
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <a routerLink="/" class="nav-item">Cerrar Sesión</a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    
+    <header class="topbar">
+      <div class="search-bar">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" placeholder="Buscar miembro o documento...">
+      </div>
+      <div class="topbar__actions">
+        <button mat-icon-button><mat-icon>notifications</mat-icon></button>
+        <div class="user-profile">
+          <img src="https://i.pravatar.cc/150?img=11" alt="Admin" class="avatar">
+          <span>Admin User</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <ng-content></ng-content>
+    </main>
+  </div>
+</div>

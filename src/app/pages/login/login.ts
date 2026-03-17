@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 // Importa los módulos de Angular Material 
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 
 @Component({
 selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent {
   hidePassword = true;
   loading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -47,8 +48,8 @@ export class LoginComponent {
 
     setTimeout(() => {
       console.log(this.loginForm.value);
+      this.router.navigate(['dashboard']);
       this.loading = false;
-      alert("Bienvenido a LagunaFitnes 💪");
     }, 2000);
 
   }
