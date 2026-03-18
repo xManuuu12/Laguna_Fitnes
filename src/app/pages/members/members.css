@@ -193,8 +193,18 @@ table {
   gap: 4px;
 }
 
-.btn-edit { color: #64748b; }
-.btn-delete { color: #f87171; }
+/* Paginator Styles */
+.custom-paginator {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.mat-mdc-paginator {
+  background-color: transparent !important;
+}
 
 /* Stats Footer */
 .stats-footer {

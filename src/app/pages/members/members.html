@@ -10,86 +10,91 @@
         <mat-icon>search</mat-icon>
         <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar miembros...">
       </div>
-      <button mat-flat-button class="btn-add">
+      <button mat-flat-button class="btn-add" (click)="openAddMemberDialog()">
         <mat-icon>person_add</mat-icon> Agregar Miembro
       </button>
     </div>
 
     <div class="table-container mat-elevation-z0">
-<table mat-table [dataSource]="members" class="mat-elevation-z0">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+        <!-- Miembro -->
+        <ng-container matColumnDef="miembro">
+          <th mat-header-cell *matHeaderCellDef> MIEMBRO </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="member-cell">
+              <div class="avatar-circle">
+                {{ getInitials(member) }}
+              </div>
+              <span class="member-name">{{ member.nombre }} {{ member.apellido }}</span>
+            </div>
+          </td>
+        </ng-container>
 
-  <!-- Miembro -->
-  <ng-container matColumnDef="miembro">
-    <th mat-header-cell *matHeaderCellDef> MIEMBRO </th>
-    <td mat-cell *matCellDef="let member">
-      <div class="member-cell">
-        <div class="avatar-circle">
-          {{ getInitials(member) }}
-        </div>
-        <span class="member-name">{{ member.nombre }} {{ member.apellido }}</span>
-      </div>
-    </td>
-  </ng-container>
+        <!-- Contacto -->
+        <ng-container matColumnDef="contacto">
+          <th mat-header-cell *matHeaderCellDef> CONTACTO </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="contact-cell">
+              <div class="contact-item">
+                <mat-icon>phone_enabled</mat-icon>
+                <span>{{ member.telefono }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
 
-  <!-- Contacto -->
-  <ng-container matColumnDef="contacto">
-    <th mat-header-cell *matHeaderCellDef> CONTACTO </th>
-    <td mat-cell *matCellDef="let member">
-      <div class="contact-cell">
-        <div class="contact-item">
-          <mat-icon>phone_enabled</mat-icon>
-          <span>{{ member.telefono }}</span>
-        </div>
-      </div>
-    </td>
-  </ng-container>
+        <!-- Membresia -->
+        <ng-container matColumnDef="membresia">
+          <th mat-header-cell *matHeaderCellDef> MEMBRESÍA </th>
+          <td mat-cell *matCellDef="let member">
+            <span class="membership-badge">
+              <mat-icon>subtitles</mat-icon> Mensual
+            </span>
+          </td>
+        </ng-container>
 
-  <!-- Membresia -->
-  <ng-container matColumnDef="membresia">
-    <th mat-header-cell *matHeaderCellDef> MEMBRESÍA </th>
-    <td mat-cell *matCellDef="let member">
-      <span class="membership-badge">
-        <mat-icon>subtitles</mat-icon> Mensual
-      </span>
-    </td>
-  </ng-container>
+        <!-- Vigencia -->
+        <ng-container matColumnDef="vigencia">
+          <th mat-header-cell *matHeaderCellDef> VIGENCIA </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="validity-cell">
+              <span>{{ member.fecha_registro }}</span>
+              <span class="validity-end">hasta 2025-01-01</span>
+            </div>
+          </td>
+        </ng-container>
 
-  <!-- Vigencia -->
-  <ng-container matColumnDef="vigencia">
-    <th mat-header-cell *matHeaderCellDef> VIGENCIA </th>
-    <td mat-cell *matCellDef="let member">
-      <div class="validity-cell">
-        <span>{{ member.fecha_registro }}</span>
-        <span class="validity-end">hasta 2025-01-01</span>
-      </div>
-    </td>
-  </ng-container>
+        <!-- Estado -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+          <td mat-cell *matCellDef="let member">
+            <span class="status-badge" [ngClass]="member.estado">
+              {{ member.estado | titlecase }}
+            </span>
+          </td>
+        </ng-container>
 
-  <!-- Estado -->
-  <ng-container matColumnDef="estado">
-    <th mat-header-cell *matHeaderCellDef> ESTADO </th>
-    <td mat-cell *matCellDef="let member">
-      <span class="status-badge" [ngClass]="member.estado">
-        {{ member.estado | titlecase }}
-      </span>
-    </td>
-  </ng-container>
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="actions-cell">
+              <button mat-icon-button (click)="openEditMemberDialog(member)"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button (click)="deleteMember(member)"><mat-icon>delete</mat-icon></button>
+            </div>
+          </td>
+        </ng-container>
 
-  <!-- Acciones -->
-  <ng-container matColumnDef="acciones">
-    <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-    <td mat-cell *matCellDef="let member">
-      <div class="actions-cell">
-        <button mat-icon-button><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button><mat-icon>delete</mat-icon></button>
-      </div>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
     </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons
+                   class="custom-paginator"
+                   aria-label="Seleccionar página de miembros">
+    </mat-paginator>
 
     <div class="stats-footer">
       <div class="stat-card">
@@ -106,4 +111,3 @@
       </div>
     </div>
   </div>
-
