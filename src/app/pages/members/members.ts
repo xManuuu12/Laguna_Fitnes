@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
-import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { ChangeDetectorRef } from '@angular/core';
 import { MemberService } from '../../services/member.service';
 import { Member } from '../../models/member.interface';
 
@@ -21,22 +21,22 @@ import { Member } from '../../models/member.interface';
     MatInputModule,
     MatFormFieldModule,
     MatChipsModule,
-    SidebarComponent
   ],
   templateUrl: './members.html',
   styleUrls: ['./members.css']
 })
 export class MembersComponent implements OnInit {
   private memberService = inject(MemberService);
-  
+  private cd = inject(ChangeDetectorRef);
+
   members: Member[] = [];
   filteredMembers = new MatTableDataSource<Member>([]);
   displayedColumns: string[] = ['miembro', 'contacto', 'membresia', 'vigencia', 'estado', 'acciones'];
-  
+
   stats = {
-    total: 5,
-    activos: 3,
-    inactivos: 2
+    total: 0,
+    activos: 0,
+    inactivos: 0
   };
 
   ngOnInit() {
@@ -44,19 +44,21 @@ export class MembersComponent implements OnInit {
   }
 
   loadMembers() {
-    this.memberService.getAllMembers().subscribe({
-      next: (response) => {
-        if (response.success && response.data) {
-          this.members = response.data;
-          this.filteredMembers.data = this.members;
-          this.calculateStats();
-        }
-      },
-      error: (error) => {
-        console.error('Error loading members:', error);
+  this.memberService.getAllMembers().subscribe({
+    next: (response) => {
+      if (response.success && response.data) {
+        this.members = response.data;
+        this.calculateStats();
+
+        this.cd.detectChanges(); // 🔥 clave
       }
-    });
-  }
+    },
+    error: (error) => {
+      console.error('Error loading members:', error);
+      this.members = [];
+    }
+  });
+}
 
   calculateStats() {
     this.stats.total = this.members.length;
@@ -66,8 +68,9 @@ export class MembersComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredMembers.data = this.members.filter(member => 
-      member.nombre?.toLowerCase().includes(filterValue) || 
+
+    this.members = this.members.filter(member =>
+      member.nombre?.toLowerCase().includes(filterValue) ||
       member.apellido?.toLowerCase().includes(filterValue) ||
       member.telefono?.toLowerCase().includes(filterValue)
     );
