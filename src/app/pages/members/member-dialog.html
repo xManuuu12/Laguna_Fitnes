@@ -28,6 +28,39 @@
         <mat-option value="vencido">Vencido</mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!-- Sección de Pago (Solo para nuevos miembros) -->
+    <div *ngIf="!isEditMode" class="payment-section">
+      <mat-checkbox formControlName="registrar_pago" color="primary">
+        Registrar pago inicial ahora
+      </mat-checkbox>
+
+      <div *ngIf="memberForm.get('registrar_pago')?.value" class="payment-fields">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Membresía</mat-label>
+          <mat-select formControlName="id_membresia">
+            <mat-option *ngFor="let m of membresias" [value]="m.id_membresia">
+              {{ m.nombre }} - ${{ m.precio }} ({{ m.duracion_dias }} días)
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="memberForm.get('id_membresia')?.hasError('required')">
+            Debe seleccionar una membresía
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Método de Pago</mat-label>
+          <mat-select formControlName="metodo_pago">
+            <mat-option value="efectivo">Efectivo</mat-option>
+            <mat-option value="transferencia">Transferencia</mat-option>
+            <mat-option value="tarjeta">Tarjeta</mat-option>
+          </mat-select>
+          <mat-error *ngIf="memberForm.get('metodo_pago')?.hasError('required')">
+            Debe seleccionar un método de pago
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

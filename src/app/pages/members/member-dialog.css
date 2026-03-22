@@ -20,3 +20,18 @@
 mat-form-field {
   width: 100%;
 }
+
+.payment-section {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.payment-fields {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

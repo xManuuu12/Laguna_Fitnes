@@ -1,3 +1,5 @@
+import { Payment } from './payment.interface';
+
 export interface Member {
   id_miembro?: number;
   id_gimnasio?: number;
@@ -7,4 +9,5 @@ export interface Member {
   estado: 'activo' | 'vencido';
   fecha_registro?: string;
   fecha_vencimiento?: string; // Nueva propiedad para la tabla
+  Payments?: Payment[];
 }
