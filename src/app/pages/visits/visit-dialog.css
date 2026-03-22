@@ -1,0 +1,31 @@
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  gap: 1rem;
+}
+
+.flex mat-form-field {
+  flex: 1;
+}
+
+mat-dialog-content {
+  min-width: 400px;
+  padding-top: 20px !important;
+}
+
+mat-dialog-actions {
+  padding: 1.5rem 1rem !important;
+}
+
+button[mat-flat-button] {
+  border-radius: 12px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+}

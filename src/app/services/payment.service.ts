@@ -11,15 +11,19 @@ export class PaymentService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5000/api/payments';
 
-  getAllPayments(): Observable<ApiResponse<Payment[]>> {
-    return this.http.get<ApiResponse<Payment[]>>(this.apiUrl);
+  getAllPayments(page: number = 1, limit: number = 10): Observable<ApiResponse<Payment[]>> {
+    return this.http.get<ApiResponse<Payment[]>>(`${this.apiUrl}?page=${page}&limit=${limit}`);
   }
 
-  getPaymentsByMember(idMiembro: number): Observable<ApiResponse<Payment[]>> {
-    return this.http.get<ApiResponse<Payment[]>>(`${this.apiUrl}/member/${idMiembro}`);
+  getAlerts(): Observable<ApiResponse<any[]>> {
+    return this.http.get<ApiResponse<any[]>>(`${this.apiUrl}/alerts`);
   }
 
   createPayment(payment: Payment): Observable<ApiResponse<Payment>> {
     return this.http.post<ApiResponse<Payment>>(this.apiUrl, payment);
+  }
+
+  createStripeIntent(data: { id_miembro: number, id_membresia: number, monto: number }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/create-intent`, data);
   }
 }

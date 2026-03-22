@@ -1,8 +1,9 @@
 export interface Payment {
   id_pago?: number;
   id_miembro: number;
+  id_membresia: number;
   monto: number;
-  tipo_membresia: string;
-  fecha_pago?: string;
+  metodo_pago: 'efectivo' | 'transferencia' | 'tarjeta';
   fecha_vencimiento: string;
+  fecha_pago?: string;
 }

@@ -1,0 +1,141 @@
+.visits-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 80px);
+}
+
+/* 1. Grid de Estadísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon mat-icon { font-size: 28px; width: 28px; height: 28px; }
+.stat-icon.blue { background-color: #e0f2fe; color: #0369a1; }
+.stat-icon.orange { background-color: #ffedd5; color: #c2410c; }
+.stat-icon.green { background-color: #dcfce7; color: #15803d; }
+
+.stat-info { display: flex; flex-direction: column; }
+.stat-label { color: #64748b; font-size: 0.9rem; font-weight: 500; }
+.stat-value { color: #1e293b; font-size: 1.75rem; font-weight: 700; line-height: 1; margin-top: 0.25rem; }
+
+/* 2. Tarjetas Generales */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 1.25rem 0;
+}
+
+/* Sección Registrar Ingreso */
+.register-form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.code-field { flex: 1; }
+.code-field ::ng-deep .mat-mdc-text-field-wrapper { background-color: #f8fafc !important; }
+
+.btn-confirm {
+  height: 56px;
+  border-radius: 12px;
+  padding: 0 2rem;
+  font-weight: 600;
+  background-color: #10b981 !important;
+  color: white !important;
+  margin-top: -20px; /* Alineación con el campo */
+}
+
+/* 3. Tabla de Visitas */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.current-date { color: #64748b; margin-top: -0.75rem; font-size: 0.95rem; text-transform: capitalize; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  width: 300px;
+}
+
+.search-box mat-icon { color: #94a3b8; font-size: 20px; margin-right: 8px; }
+.search-box input { border: none; background: transparent; outline: none; width: 100%; color: #1e293b; }
+
+.table-container { border-radius: 12px; overflow: hidden; border: 1px solid #f1f5f9; }
+
+table { width: 100%; }
+
+.mat-mdc-header-cell {
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 1rem !important;
+}
+
+.mat-mdc-cell { padding: 1.25rem 1rem !important; color: #334155; }
+
+.member-name { font-weight: 600; color: #1e293b; }
+
+.plan-badge {
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.time-cell { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+.time-cell mat-icon { font-size: 18px; color: #10b981; }
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.status-badge.activo { background: #dcfce7; color: #15803d; }
+.status-badge.vencido { background: #fee2e2; color: #b91c1c; }
+
+mat-paginator { border-top: 1px solid #f1f5f9; }

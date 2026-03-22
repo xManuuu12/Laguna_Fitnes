@@ -11,8 +11,8 @@ export class MemberService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5000/api/members';
 
-  getAllMembers(): Observable<ApiResponse<Member[]>> {
-    return this.http.get<ApiResponse<Member[]>>(this.apiUrl);
+  getAllMembers(page: number = 1, limit: number = 20): Observable<ApiResponse<Member[]>> {
+    return this.http.get<ApiResponse<Member[]>>(`${this.apiUrl}?page=${page}&limit=${limit}`);
   }
 
   getMemberById(id: number): Observable<ApiResponse<Member>> {

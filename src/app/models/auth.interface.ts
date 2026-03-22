@@ -1,5 +1,6 @@
 export interface User {
   id_usuario: number;
+  id_gimnasio: number;
   nombre: string;
   email: string;
   rol: 'admin' | 'recepcion';
