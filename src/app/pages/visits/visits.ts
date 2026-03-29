@@ -115,7 +115,7 @@ export class VisitsComponent implements OnInit, AfterViewInit {
         // 2. Procedemos a registrar la entrada independientemente del aviso
         this.registerEntrance(socioId);
       },
-      error: (err) => {
+      error: (err: any) => {
         this.snackBar.open('Error: El socio no existe en el sistema', 'Cerrar', { duration: 3000 });
         this.isProcessing = false;
       }
@@ -131,7 +131,7 @@ export class VisitsComponent implements OnInit, AfterViewInit {
         this.loadVisits();
         this.loadTodayStats();
       },
-      error: (err) => {
+      error: (err: any) => {
         this.snackBar.open('Error al registrar la visita en el servidor', 'Cerrar', { duration: 3000 });
         this.isProcessing = false;
       }

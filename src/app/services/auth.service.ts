@@ -5,13 +5,14 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthResponse, User } from '../models/auth.interface';
 import { ApiResponse } from '../models/api-response.interface';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
-  private apiUrl = 'http://localhost:5000/api/auth';
+  private apiUrl = 'https://fit-manager-backend-gb183crfy-planifys-projects-8087f027.vercel.app/api/auth';
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();

@@ -10,7 +10,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
-import { Member Service } from '../../services/member.service';
+import { MemberService } from '../../services/member.service';
 import { PaymentService } from '../../services/payment.service';
 import { MembresiaService } from '../../services/membresia.service';
 import { Member } from '../../models/member.interface';
@@ -181,7 +181,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
               this.loadMembers();
             }
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error('Error creating member:', err);
             this.snackBar.open('Error al crear miembro', 'Cerrar', { duration: 3000 });
           }
@@ -210,7 +210,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
             this.snackBar.open('Miembro y pago inicial registrados', 'Cerrar', { duration: 3000 });
             this.loadMembers();
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error('Error creating initial payment:', err);
             this.snackBar.open('Miembro creado, pero error al registrar pago inicial', 'Cerrar', { duration: 3000 });
             this.loadMembers();
@@ -233,7 +233,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
             this.snackBar.open('Miembro actualizado correctamente', 'Cerrar', { duration: 3000 });
             this.loadMembers();
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error('Error updating member:', err);
             this.snackBar.open('Error al actualizar miembro', 'Cerrar', { duration: 3000 });
           }
@@ -258,7 +258,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
             this.snackBar.open('Miembro eliminado correctamente', 'Cerrar', { duration: 3000 });
             this.loadMembers();
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error('Error deleting member:', err);
             this.snackBar.open('Error al eliminar miembro', 'Cerrar', { duration: 3000 });
           }
