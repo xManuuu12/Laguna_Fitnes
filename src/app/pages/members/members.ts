@@ -49,7 +49,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
   members: Member[] = [];
   membresias: any[] = [];
   dataSource = new MatTableDataSource<Member>([]);
-  displayedColumns: string[] = ['miembro', 'contacto', 'membresia', 'vigencia', 'estado', 'acciones'];
+  displayedColumns: string[] = ['id', 'miembro', 'contacto', 'membresia', 'vigencia', 'estado', 'acciones'];
 
   stats = {
     total: 0,

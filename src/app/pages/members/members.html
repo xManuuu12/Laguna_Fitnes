@@ -16,7 +16,20 @@
     </div>
 
     <div class="table-container mat-elevation-z0">
+      <div class="">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+
+        <!-- Miembro ID -->
+         <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let member">
+            <div class="contact-cell">
+              <div class="contact-item">
+                <span>{{ member.id_miembro }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
         <!-- Miembro -->
         <ng-container matColumnDef="miembro">
           <th mat-header-cell *matHeaderCellDef> MIEMBRO </th>
@@ -90,6 +103,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      </div>
     </div>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]"
