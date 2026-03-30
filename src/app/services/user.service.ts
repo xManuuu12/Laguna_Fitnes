@@ -9,7 +9,7 @@ import { ApiResponse } from '../models/api-response.interface';
 })
 export class UserService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/users';
+  private apiUrl = 'https://fit-manager-backend.vercel.app/api/users';
 
   getAllUsers(): Observable<ApiResponse<User[]>> {
     return this.http.get<ApiResponse<User[]>>(this.apiUrl);

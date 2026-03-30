@@ -13,7 +13,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
   private apiUrl = 'https://fit-manager-backend.vercel.app/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
-  //private apiUrl = 'http://localhost:5000/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
+  //private apiUrl = 'https://fit-manager-backend.vercel.app/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();

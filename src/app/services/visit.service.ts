@@ -10,7 +10,7 @@ import { ApiResponse } from '../models/api-response.interface';
 export class VisitService {
   private http = inject(HttpClient);
   // Asegúrate de que este puerto coincida con tu backend FitManagerBackend
-  private apiUrl = 'http://localhost:5000/api/visitas'; 
+  private apiUrl = 'https://fit-manager-backend.vercel.app/api/visitas'; 
 
   /**
    * Obtener todas las visitas (Historial)

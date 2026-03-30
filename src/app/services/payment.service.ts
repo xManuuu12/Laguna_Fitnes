@@ -9,7 +9,7 @@ import { ApiResponse } from '../models/api-response.interface';
 })
 export class PaymentService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/payments';
+  private apiUrl = 'https://fit-manager-backend.vercel.app/api/payments';
 
   getAllPayments(page: number = 1, limit: number = 10): Observable<ApiResponse<Payment[]>> {
     return this.http.get<ApiResponse<Payment[]>>(`${this.apiUrl}?page=${page}&limit=${limit}`);

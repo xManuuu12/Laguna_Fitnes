@@ -8,7 +8,7 @@ import { ApiResponse } from '../models/api-response.interface';
 })
 export class NotificationService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/notifications';
+  private apiUrl = 'https://fit-manager-backend.vercel.app/api/notifications';
 
   sendReminder(memberId: number): Observable<ApiResponse<any>> {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/send-reminder/${memberId}`, {});

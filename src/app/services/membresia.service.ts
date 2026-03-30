@@ -9,7 +9,7 @@ import { ApiResponse } from '../models/api-response.interface';
 })
 export class MembresiaService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api/membresias';
+  private apiUrl = 'https://fit-manager-backend.vercel.app/api/membresias';
 
   getAllMembresias(): Observable<ApiResponse<Membresia[]>> {
     return this.http.get<ApiResponse<Membresia[]>>(this.apiUrl);
