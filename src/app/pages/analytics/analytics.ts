@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import { AnalyticsService, AnalyticsData } from '../../services/analytics.servic
 })
 export class AnalyticsComponent implements OnInit {
   private analyticsService = inject(AnalyticsService);
+  private cdr = inject(ChangeDetectorRef);
 
   // Chart: Miembros Activos vs Inactivos (Pie)
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -92,6 +93,7 @@ export class AnalyticsComponent implements OnInit {
         if (response.success && response.data) {
           const data = response.data;
           this.updateCharts(data);
+          this.cdr.detectChanges(); // Forzar renderizado inicial
         }
       },
       error: (err) => console.error('Error loading analytics data', err)
@@ -111,9 +113,7 @@ export class AnalyticsComponent implements OnInit {
     this.lineChartData.labels = dates;
     this.lineChartData.datasets[0].data = dates.map(date => data.visitas.ultimos7Dias[date]);
 
-    // Force chart update if necessary (sometimes required for standalone)
-    // In ng2-charts 4+, it should be automatic if data object reference is kept but updated internally
-    // or by replacing the whole data object.
+    // Forzar actualización de referencias para ng2-charts
     this.pieChartData = { ...this.pieChartData };
     this.barChartData = { ...this.barChartData };
     this.lineChartData = { ...this.lineChartData };
