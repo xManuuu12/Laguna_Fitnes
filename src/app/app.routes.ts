@@ -5,6 +5,7 @@ import { MembersComponent } from './pages/members/members';
 import { VisitsComponent } from './pages/visits/visits';
 import { SettingsComponent } from './pages/settings/settings';
 import { SidebarComponent } from './components/sidebar/sidebar';
+import { AnalyticsComponent } from './pages/analytics/analytics';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
       {
         path: 'visits',
         component: VisitsComponent
+      },
+      {
+        path: 'analytics',
+        component: AnalyticsComponent
       },
       {
         path: 'settings',
