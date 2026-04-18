@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -159,6 +159,11 @@ export class AnalyticsComponent implements OnInit {
 
   onFilterChange(event: any) {
     this.selectedVisitFilter = event.target.value;
+    this.updateVisitChart();
+  }
+
+  onMatFilterChange(event: MatSelectChange) {
+    this.selectedVisitFilter = event.value;
     this.updateVisitChart();
   }
 

@@ -64,6 +64,20 @@ mat-card-header {
   padding: 1.5rem 1.5rem 0 !important;
 }
 
+.header-with-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-container {
+  min-width: 250px;
+}
+
+.filter-container mat-form-field {
+  width: 100%;
+}
+
 mat-card-title {
   font-size: 1.25rem !important;
   font-weight: 600 !important;
