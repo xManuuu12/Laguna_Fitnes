@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MembresiaService } from '../../services/membresia.service';
 import { AuthService } from '../../services/auth.service';
 import { Membresia } from '../../models/membresia.interface';
@@ -29,7 +30,8 @@ import { User } from '../../models/auth.interface';
     MatFormFieldModule,
     MatSelectModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   templateUrl: './settings.html',
   styleUrls: ['./settings.css']

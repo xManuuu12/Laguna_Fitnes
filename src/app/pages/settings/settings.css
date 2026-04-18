@@ -1,87 +1,156 @@
 .settings-container {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 1.5rem;
 }
 
 .settings-header {
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .settings-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
   margin: 0;
-  font-size: 24px;
-  color: #333;
+  color: #1e293b;
 }
 
 .settings-header p {
-  margin: 4px 0 0;
-  color: #666;
+  color: #64748b;
+  margin-top: 4px;
+  font-size: 0.95rem;
 }
 
 .tab-content {
-  padding: 24px 0;
+  padding: 1.5rem 0;
 }
 
 .settings-grid {
   display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 24px;
+  grid-template-columns: 380px 1fr;
+  gap: 1.5rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .settings-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.form-card, .table-card {
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+.card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.card-content {
+  padding: 1.5rem;
 }
 
 .settings-form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 16px;
+  gap: 1rem;
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: 1rem;
 }
 
-.mat-mdc-table {
-  background: transparent;
+.btn-primary {
+  background-color: #10b981 !important;
+  color: white !important;
+  border-radius: 10px !important;
+  padding: 0.6rem 1.2rem !important;
+  font-weight: 600 !important;
 }
 
+.btn-cancel {
+  border-radius: 10px !important;
+  padding: 0.6rem 1.2rem !important;
+}
+
+/* Table Styles - Aligned with Standard */
+.table-container {
+  background: white;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-header-cell {
+  background-color: #f8fafc !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.05em !important;
+  padding: 1rem !important;
+  text-transform: uppercase;
+}
+
+.mat-mdc-cell {
+  padding: 1rem !important;
+  color: #334155 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f8fafc;
+}
+
+/* Badge Styles */
 .role-badge {
   padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: capitalize;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .role-badge.admin {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: #dbeafe;
+  color: #1e40af;
 }
 
 .role-badge.recepcion {
-  background-color: #f3e5f5;
-  color: #7b1fa2;
+  background-color: #f3e8ff;
+  color: #6b21a8;
+}
+
+/* Tabs styling */
+::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #10b981;
+  --mat-tab-header-active-label-text-color: #10b981;
+  --mat-tab-header-active-ripple-color: rgba(16, 185, 129, 0.1);
+}
+
+::ng-deep .mat-mdc-tab-label-content {
+  font-weight: 600 !important;
+  letter-spacing: 0.025em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 mat-icon {
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-.mat-mdc-tab-label-content {
-  display: flex;
-  align-items: center;
+  margin-right: 0 !important;
 }

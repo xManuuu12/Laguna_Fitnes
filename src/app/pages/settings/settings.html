@@ -14,12 +14,12 @@
 
       <div class="tab-content">
         <div class="settings-grid">
-          <!-- Formulario -->
-          <mat-card class="form-card">
-            <mat-card-header>
-              <mat-card-title>{{ editingMembresiaId ? 'Editar' : 'Nueva' }} Membresía</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+          <!-- Formulario Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">{{ editingMembresiaId ? 'Editar' : 'Nueva' }} Membresía</h2>
+            </div>
+            <div class="card-content">
               <form [formGroup]="membresiaForm" (ngSubmit)="onSubmitMembresia()" class="settings-form">
                 <mat-form-field appearance="outline">
                   <mat-label>Nombre del Plan</mat-label>
@@ -39,51 +39,57 @@
                 </mat-form-field>
 
                 <div class="form-actions">
-                  <button mat-button type="button" (click)="resetMembresiaForm()" *ngIf="editingMembresiaId">
+                  <button mat-button type="button" class="btn-cancel" (click)="resetMembresiaForm()" *ngIf="editingMembresiaId">
                     Cancelar
                   </button>
-                  <button mat-flat-button color="primary" [disabled]="membresiaForm.invalid">
+                  <button mat-flat-button class="btn-primary" [disabled]="membresiaForm.invalid">
+                    <mat-icon>{{ editingMembresiaId ? 'save' : 'add' }}</mat-icon>
                     {{ editingMembresiaId ? 'Actualizar' : 'Crear' }} Plan
                   </button>
                 </div>
               </form>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </div>
 
-          <!-- Tabla -->
-          <mat-card class="table-card">
-            <mat-table [dataSource]="membresiaDataSource" class="mat-elevation-z0">
-              <ng-container matColumnDef="nombre">
-                <mat-header-cell *matHeaderCellDef> Plan </mat-header-cell>
-                <mat-cell *matCellDef="let m"> {{m.nombre}} </mat-cell>
-              </ng-container>
+          <!-- Tabla Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Planes Disponibles</h2>
+            </div>
+            <div class="table-container">
+              <table mat-table [dataSource]="membresiaDataSource" class="mat-elevation-z0">
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef> Plan </th>
+                  <td mat-cell *matCellDef="let m"> <strong>{{m.nombre}}</strong> </td>
+                </ng-container>
 
-              <ng-container matColumnDef="precio">
-                <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
-                <mat-cell *matCellDef="let m"> ${{m.precio}} </mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="precio">
+                  <th mat-header-cell *matHeaderCellDef> Precio </th>
+                  <td mat-cell *matCellDef="let m"> ${{m.precio}} </td>
+                </ng-container>
 
-              <ng-container matColumnDef="duracion">
-                <mat-header-cell *matHeaderCellDef> Duración </mat-header-cell>
-                <mat-cell *matCellDef="let m"> {{m.duracion_dias}} días </mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="duracion">
+                  <th mat-header-cell *matHeaderCellDef> Duración </th>
+                  <td mat-cell *matCellDef="let m"> {{m.duracion_dias}} días </td>
+                </ng-container>
 
-              <ng-container matColumnDef="acciones">
-                <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
-                <mat-cell *matCellDef="let m">
-                  <button mat-icon-button color="primary" (click)="editMembresia(m)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteMembresia(m.id_membresia)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                  <td mat-cell *matCellDef="let m">
+                    <button mat-icon-button color="primary" (click)="editMembresia(m)" matTooltip="Editar">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteMembresia(m.id_membresia)" matTooltip="Eliminar">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
 
-              <mat-header-row *matHeaderRowDef="membresiaColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: membresiaColumns;"></mat-row>
-            </mat-table>
-          </mat-card>
+                <tr mat-header-row *matHeaderRowDef="membresiaColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: membresiaColumns;"></tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </mat-tab>
@@ -97,12 +103,12 @@
 
       <div class="tab-content">
         <div class="settings-grid">
-          <!-- Formulario -->
-          <mat-card class="form-card">
-            <mat-card-header>
-              <mat-card-title>{{ editingUserId ? 'Editar' : 'Nuevo' }} Usuario</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+          <!-- Formulario Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">{{ editingUserId ? 'Editar' : 'Nuevo' }} Usuario</h2>
+            </div>
+            <div class="card-content">
               <form [formGroup]="userForm" (ngSubmit)="onSubmitUser()" class="settings-form">
                 <mat-form-field appearance="outline">
                   <mat-label>Nombre Completo</mat-label>
@@ -129,53 +135,59 @@
                 </mat-form-field>
 
                 <div class="form-actions">
-                  <button mat-button type="button" (click)="resetUserForm()" *ngIf="editingUserId">
+                  <button mat-button type="button" class="btn-cancel" (click)="resetUserForm()" *ngIf="editingUserId">
                     Cancelar
                   </button>
-                  <button mat-flat-button color="primary" [disabled]="userForm.invalid">
+                  <button mat-flat-button class="btn-primary" [disabled]="userForm.invalid">
+                    <mat-icon>{{ editingUserId ? 'save' : 'person_add' }}</mat-icon>
                     {{ editingUserId ? 'Actualizar' : 'Crear' }} Usuario
                   </button>
                 </div>
               </form>
-            </mat-card-content>
-          </mat-card>
+            </div>
+          </div>
 
-          <!-- Tabla -->
-          <mat-card class="table-card">
-            <mat-table [dataSource]="userDataSource" class="mat-elevation-z0">
-              <ng-container matColumnDef="nombre">
-                <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
-                <mat-cell *matCellDef="let u"> {{u.nombre}} </mat-cell>
-              </ng-container>
+          <!-- Tabla Card -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Usuarios Registrados</h2>
+            </div>
+            <div class="table-container">
+              <table mat-table [dataSource]="userDataSource" class="mat-elevation-z0">
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                  <td mat-cell *matCellDef="let u"> <strong>{{u.nombre}}</strong> </td>
+                </ng-container>
 
-              <ng-container matColumnDef="email">
-                <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-                <mat-cell *matCellDef="let u"> {{u.email}} </mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef> Email </th>
+                  <td mat-cell *matCellDef="let u"> {{u.email}} </td>
+                </ng-container>
 
-              <ng-container matColumnDef="rol">
-                <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
-                <mat-cell *matCellDef="let u"> 
-                  <span class="role-badge" [ngClass]="u.rol">{{u.rol}}</span>
-                </mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="rol">
+                  <th mat-header-cell *matHeaderCellDef> Rol </th>
+                  <td mat-cell *matCellDef="let u"> 
+                    <span class="role-badge" [ngClass]="u.rol">{{u.rol}}</span>
+                  </td>
+                </ng-container>
 
-              <ng-container matColumnDef="acciones">
-                <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
-                <mat-cell *matCellDef="let u">
-                  <button mat-icon-button color="primary" (click)="editUser(u)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteUser(u.id_usuario)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </mat-cell>
-              </ng-container>
+                <ng-container matColumnDef="acciones">
+                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                  <td mat-cell *matCellDef="let u">
+                    <button mat-icon-button color="primary" (click)="editUser(u)" matTooltip="Editar">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteUser(u.id_usuario)" matTooltip="Eliminar">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
 
-              <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: userColumns;"></mat-row>
-            </mat-table>
-          </mat-card>
+                <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </mat-tab>
