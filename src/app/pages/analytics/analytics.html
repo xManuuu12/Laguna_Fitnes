@@ -47,9 +47,19 @@
 
   <!-- Tarjeta de Tendencia de Visitas (Line) - Full Width -->
   <mat-card class="chart-card full-width">
-    <mat-card-header>
-      <mat-card-title>Tendencia de Visitas</mat-card-title>
-      <mat-card-subtitle>Asistencia en los últimos 7 días</mat-card-subtitle>
+    <mat-card-header class="header-with-filter">
+      <div>
+        <mat-card-title>Tendencia de Visitas</mat-card-title>
+        <mat-card-subtitle>Análisis de asistencia temporal</mat-card-subtitle>
+      </div>
+      <div class="filter-container">
+        <select class="custom-select" (change)="onFilterChange($event)" [value]="selectedVisitFilter">
+          <option value="ultimos7Dias">Últimos 7 días</option>
+          <option value="porDiaSemana">Días de la semana (Promedio)</option>
+          <option value="porSemana">Por Semana</option>
+          <option value="porMes">Por Mes</option>
+        </select>
+      </div>
     </mat-card-header>
     <mat-card-content>
       <div class="chart-container-large">
