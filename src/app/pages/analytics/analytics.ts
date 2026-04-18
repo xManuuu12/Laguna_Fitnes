@@ -92,28 +92,30 @@ export class AnalyticsComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.status = 'loading';
     this.loadData();
   }
 
   loadData() {
-    this.status = 'loading';
-    this.analyticsService.getDashboardData().subscribe({
-      next: (response) => {
-        if (response.success && response.data) {
-          this.allData = response.data;
-          this.updateCharts();
-          this.cdr.detectChanges();
-          this.status = 'ok';
-        } else {
-          this.status = 'error';
-        }
-      },
-      error: (err) => {
-        console.error('Error loading analytics data', err);
+  this.analyticsService.getDashboardData().subscribe({
+    next: (response) => {
+      if (response.success && response.data) {
+        this.allData = response.data;
+        this.updateCharts();
+        this.status = 'ok';    
+        this.cdr.detectChanges(); 
+      } else {
         this.status = 'error';
+        this.cdr.detectChanges(); 
       }
-    });
-  }
+    },
+    error: (err) => {
+      console.error('Error loading analytics data', err);
+      this.status = 'error';
+      this.cdr.detectChanges();
+    }
+  });
+}
 
   updateCharts() {
     if (!this.allData) return;
