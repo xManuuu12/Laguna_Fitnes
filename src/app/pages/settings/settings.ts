@@ -15,6 +15,7 @@ import { MembresiaService } from '../../services/membresia.service';
 import { AuthService } from '../../services/auth.service';
 import { Membresia } from '../../models/membresia.interface';
 import { User } from '../../models/auth.interface';
+import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
 
 @Component({
   selector: 'app-settings',
@@ -31,7 +32,8 @@ import { User } from '../../models/auth.interface';
     MatSelectModule,
     MatCardModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    StatusTemplateComponent
   ],
   templateUrl: './settings.html',
   styleUrls: ['./settings.css']
@@ -42,6 +44,7 @@ export class SettingsComponent implements OnInit {
   private authService = inject(AuthService);
   private snackBar = inject(MatSnackBar);
 
+  status: StatusType = 'loading';
   // Membresías
   membresias: Membresia[] = [];
   membresiaDataSource = new MatTableDataSource<Membresia>([]);
@@ -72,6 +75,11 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.status = 'loading';
     this.loadMembresias();
     this.loadUsers();
   }
@@ -83,8 +91,12 @@ export class SettingsComponent implements OnInit {
         if (res.success) {
           this.membresias = res.data || [];
           this.membresiaDataSource.data = this.membresias;
+          this.status = 'ok';
+        } else {
+          this.status = 'error';
         }
-      }
+      },
+      error: () => this.status = 'error'
     });
   }
 
@@ -138,8 +150,12 @@ export class SettingsComponent implements OnInit {
         if (res.success) {
           this.users = res.data || [];
           this.userDataSource.data = this.users;
+          this.status = 'ok';
+        } else {
+          this.status = 'error';
         }
-      }
+      },
+      error: () => this.status = 'error'
     });
   }
 

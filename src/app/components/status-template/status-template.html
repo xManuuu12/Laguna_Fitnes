@@ -1,0 +1,23 @@
+<div [ngSwitch]="status" class="template-container">
+  
+  <!-- Estado de Carga -->
+  <div *ngSwitchCase="'loading'" class="loading-container">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Estado de Error -->
+  <div *ngSwitchCase="'error'" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <h3>Algo salió mal</h3>
+    <p>{{ errorMessage }}</p>
+    <button mat-flat-button color="primary" (click)="status = 'loading'">
+      Reintentar
+    </button>
+  </div>
+
+  <!-- Estado Exitoso -->
+  <div *ngSwitchCase="'ok'" class="content-container">
+    <ng-content></ng-content>
+  </div>
+
+</div>

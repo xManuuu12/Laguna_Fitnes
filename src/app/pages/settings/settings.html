@@ -1,194 +1,196 @@
-<div class="settings-container">
-  <header class="settings-header">
-    <h1>Configuración del Sistema</h1>
-    <p>Gestiona las membresías y los usuarios con acceso al sistema</p>
-  </header>
+<app-status-template [status]="status">
+  <div class="settings-container">
+    <header class="settings-header">
+      <h1>Configuración del Sistema</h1>
+      <p>Gestiona las membresías y los usuarios con acceso al sistema</p>
+    </header>
 
-  <mat-tab-group animationDuration="0ms">
-    <!-- Pestaña de Membresías -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>card_membership</mat-icon>
-        <span>Membresías</span>
-      </ng-template>
+    <mat-tab-group animationDuration="0ms">
+      <!-- Pestaña de Membresías -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>card_membership</mat-icon>
+          <span>Membresías</span>
+        </ng-template>
 
-      <div class="tab-content">
-        <div class="settings-grid">
-          <!-- Formulario Card -->
-          <div class="card">
-            <div class="card-header">
-              <h2 class="card-title">{{ editingMembresiaId ? 'Editar' : 'Nueva' }} Membresía</h2>
-            </div>
-            <div class="card-content">
-              <form [formGroup]="membresiaForm" (ngSubmit)="onSubmitMembresia()" class="settings-form">
-                <mat-form-field appearance="outline">
-                  <mat-label>Nombre del Plan</mat-label>
-                  <input matInput formControlName="nombre" placeholder="Ej. Mensualidad">
-                </mat-form-field>
+        <div class="tab-content">
+          <div class="settings-grid">
+            <!-- Formulario Card -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">{{ editingMembresiaId ? 'Editar' : 'Nueva' }} Membresía</h2>
+              </div>
+              <div class="card-content">
+                <form [formGroup]="membresiaForm" (ngSubmit)="onSubmitMembresia()" class="settings-form">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nombre del Plan</mat-label>
+                    <input matInput formControlName="nombre" placeholder="Ej. Mensualidad">
+                  </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Precio</mat-label>
-                  <input matInput type="number" formControlName="precio" placeholder="0.00">
-                </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Precio</mat-label>
+                    <input matInput type="number" formControlName="precio" placeholder="0.00">
+                  </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Duración (Días)</mat-label>
-                  <input matInput type="number" formControlName="duracion_dias" placeholder="30">
-                  <mat-icon matSuffix>schedule</mat-icon>
-                </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Duración (Días)</mat-label>
+                    <input matInput type="number" formControlName="duracion_dias" placeholder="30">
+                    <mat-icon matSuffix>schedule</mat-icon>
+                  </mat-form-field>
 
-                <div class="form-actions">
-                  <button mat-button type="button" class="btn-cancel" (click)="resetMembresiaForm()" *ngIf="editingMembresiaId">
-                    Cancelar
-                  </button>
-                  <button mat-flat-button class="btn-primary" [disabled]="membresiaForm.invalid">
-                    <mat-icon>{{ editingMembresiaId ? 'save' : 'add' }}</mat-icon>
-                    {{ editingMembresiaId ? 'Actualizar' : 'Crear' }} Plan
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <!-- Tabla Card -->
-          <div class="card">
-            <div class="card-header">
-              <h2 class="card-title">Planes Disponibles</h2>
-            </div>
-            <div class="table-container">
-              <table mat-table [dataSource]="membresiaDataSource" class="mat-elevation-z0">
-                <ng-container matColumnDef="nombre">
-                  <th mat-header-cell *matHeaderCellDef> Plan </th>
-                  <td mat-cell *matCellDef="let m"> <strong>{{m.nombre}}</strong> </td>
-                </ng-container>
-
-                <ng-container matColumnDef="precio">
-                  <th mat-header-cell *matHeaderCellDef> Precio </th>
-                  <td mat-cell *matCellDef="let m"> ${{m.precio}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="duracion">
-                  <th mat-header-cell *matHeaderCellDef> Duración </th>
-                  <td mat-cell *matCellDef="let m"> {{m.duracion_dias}} días </td>
-                </ng-container>
-
-                <ng-container matColumnDef="acciones">
-                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                  <td mat-cell *matCellDef="let m">
-                    <button mat-icon-button color="primary" (click)="editMembresia(m)" matTooltip="Editar">
-                      <mat-icon>edit</mat-icon>
+                  <div class="form-actions">
+                    <button mat-button type="button" class="btn-cancel" (click)="resetMembresiaForm()" *ngIf="editingMembresiaId">
+                      Cancelar
                     </button>
-                    <button mat-icon-button color="warn" (click)="deleteMembresia(m.id_membresia)" matTooltip="Eliminar">
-                      <mat-icon>delete</mat-icon>
+                    <button mat-flat-button class="btn-primary" [disabled]="membresiaForm.invalid">
+                      <mat-icon>{{ editingMembresiaId ? 'save' : 'add' }}</mat-icon>
+                      {{ editingMembresiaId ? 'Actualizar' : 'Crear' }} Plan
                     </button>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="membresiaColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: membresiaColumns;"></tr>
-              </table>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </mat-tab>
 
-    <!-- Pestaña de Usuarios -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon>people</mat-icon>
-        <span>Usuarios del Sistema</span>
-      </ng-template>
+            <!-- Tabla Card -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Planes Disponibles</h2>
+              </div>
+              <div class="table-container">
+                <table mat-table [dataSource]="membresiaDataSource" class="mat-elevation-z0">
+                  <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Plan </th>
+                    <td mat-cell *matCellDef="let m"> <strong>{{m.nombre}}</strong> </td>
+                  </ng-container>
 
-      <div class="tab-content">
-        <div class="settings-grid">
-          <!-- Formulario Card -->
-          <div class="card">
-            <div class="card-header">
-              <h2 class="card-title">{{ editingUserId ? 'Editar' : 'Nuevo' }} Usuario</h2>
-            </div>
-            <div class="card-content">
-              <form [formGroup]="userForm" (ngSubmit)="onSubmitUser()" class="settings-form">
-                <mat-form-field appearance="outline">
-                  <mat-label>Nombre Completo</mat-label>
-                  <input matInput formControlName="nombre">
-                </mat-form-field>
+                  <ng-container matColumnDef="precio">
+                    <th mat-header-cell *matHeaderCellDef> Precio </th>
+                    <td mat-cell *matCellDef="let m"> ${{m.precio}} </td>
+                  </ng-container>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Correo Electrónico</mat-label>
-                  <input matInput type="email" formControlName="email">
-                </mat-form-field>
+                  <ng-container matColumnDef="duracion">
+                    <th mat-header-cell *matHeaderCellDef> Duración </th>
+                    <td mat-cell *matCellDef="let m"> {{m.duracion_dias}} días </td>
+                  </ng-container>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Contraseña</mat-label>
-                  <input matInput type="password" formControlName="password">
-                  <mat-hint *ngIf="editingUserId">Dejar en blanco para mantener actual</mat-hint>
-                </mat-form-field>
+                  <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let m">
+                      <button mat-icon-button color="primary" (click)="editMembresia(m)" matTooltip="Editar">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteMembresia(m.id_membresia)" matTooltip="Eliminar">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Rol</mat-label>
-                  <mat-select formControlName="rol">
-                    <mat-option value="admin">Administrador</mat-option>
-                    <mat-option value="recepcion">Recepción</mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <div class="form-actions">
-                  <button mat-button type="button" class="btn-cancel" (click)="resetUserForm()" *ngIf="editingUserId">
-                    Cancelar
-                  </button>
-                  <button mat-flat-button class="btn-primary" [disabled]="userForm.invalid">
-                    <mat-icon>{{ editingUserId ? 'save' : 'person_add' }}</mat-icon>
-                    {{ editingUserId ? 'Actualizar' : 'Crear' }} Usuario
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <!-- Tabla Card -->
-          <div class="card">
-            <div class="card-header">
-              <h2 class="card-title">Usuarios Registrados</h2>
-            </div>
-            <div class="table-container">
-              <table mat-table [dataSource]="userDataSource" class="mat-elevation-z0">
-                <ng-container matColumnDef="nombre">
-                  <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                  <td mat-cell *matCellDef="let u"> <strong>{{u.nombre}}</strong> </td>
-                </ng-container>
-
-                <ng-container matColumnDef="email">
-                  <th mat-header-cell *matHeaderCellDef> Email </th>
-                  <td mat-cell *matCellDef="let u"> {{u.email}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="rol">
-                  <th mat-header-cell *matHeaderCellDef> Rol </th>
-                  <td mat-cell *matCellDef="let u"> 
-                    <span class="role-badge" [ngClass]="u.rol">{{u.rol}}</span>
-                  </td>
-                </ng-container>
-
-                <ng-container matColumnDef="acciones">
-                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                  <td mat-cell *matCellDef="let u">
-                    <button mat-icon-button color="primary" (click)="editUser(u)" matTooltip="Editar">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                    <button mat-icon-button color="warn" (click)="deleteUser(u.id_usuario)" matTooltip="Eliminar">
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
-              </table>
+                  <tr mat-header-row *matHeaderRowDef="membresiaColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: membresiaColumns;"></tr>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+      </mat-tab>
+
+      <!-- Pestaña de Usuarios -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>people</mat-icon>
+          <span>Usuarios del Sistema</span>
+        </ng-template>
+
+        <div class="tab-content">
+          <div class="settings-grid">
+            <!-- Formulario Card -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">{{ editingUserId ? 'Editar' : 'Nuevo' }} Usuario</h2>
+              </div>
+              <div class="card-content">
+                <form [formGroup]="userForm" (ngSubmit)="onSubmitUser()" class="settings-form">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nombre Completo</mat-label>
+                    <input matInput formControlName="nombre">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput type="email" formControlName="email">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-hint *ngIf="editingUserId">Dejar en blanco para mantener actual</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Rol</mat-label>
+                    <mat-select formControlName="rol">
+                      <mat-option value="admin">Administrador</mat-option>
+                      <mat-option value="recepcion">Recepción</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <div class="form-actions">
+                    <button mat-button type="button" class="btn-cancel" (click)="resetUserForm()" *ngIf="editingUserId">
+                      Cancelar
+                    </button>
+                    <button mat-flat-button class="btn-primary" [disabled]="userForm.invalid">
+                      <mat-icon>{{ editingUserId ? 'save' : 'person_add' }}</mat-icon>
+                      {{ editingUserId ? 'Actualizar' : 'Crear' }} Usuario
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Tabla Card -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Usuarios Registrados</h2>
+              </div>
+              <div class="table-container">
+                <table mat-table [dataSource]="userDataSource" class="mat-elevation-z0">
+                  <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                    <td mat-cell *matCellDef="let u"> <strong>{{u.nombre}}</strong> </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let u"> {{u.email}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="rol">
+                    <th mat-header-cell *matHeaderCellDef> Rol </th>
+                    <td mat-cell *matCellDef="let u"> 
+                      <span class="role-badge" [ngClass]="u.rol">{{u.rol}}</span>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let u">
+                      <button mat-icon-button color="primary" (click)="editUser(u)" matTooltip="Editar">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteUser(u.id_usuario)" matTooltip="Eliminar">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</app-status-template>

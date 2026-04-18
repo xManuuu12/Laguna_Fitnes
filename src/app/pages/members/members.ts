@@ -18,6 +18,8 @@ import { Membresia } from '../../models/membresia.interface';
 import { MemberDialogComponent } from './member-dialog';
 import { ConfirmDialogComponent } from './confirm-dialog';
 
+import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
+
 @Component({
   selector: 'app-members',
   standalone: true,
@@ -31,12 +33,14 @@ import { ConfirmDialogComponent } from './confirm-dialog';
     MatChipsModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    StatusTemplateComponent
   ],
   templateUrl: './members.html',
   styleUrls: ['./members.css']
 })
 export class MembersComponent implements OnInit, AfterViewInit {
+  status: StatusType = 'loading';
   private memberService = inject(MemberService);
   private paymentService = inject(PaymentService);
   private membresiaService = inject(MembresiaService);
@@ -127,6 +131,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
   }
 
   loadMembers() {
+    this.status = 'loading';
     this.memberService.getAllMembers().subscribe({
       next: (response) => {
         if (response.success && response.data) {
@@ -134,12 +139,16 @@ export class MembersComponent implements OnInit, AfterViewInit {
           this.dataSource.data = this.members;
           this.calculateStats();
           this.cd.detectChanges();
+          this.status = 'ok';
+        } else {
+          this.status = 'error';
         }
       },
       error: (error) => {
         console.error('Error loading members:', error);
         this.members = [];
         this.dataSource.data = [];
+        this.status = 'error';
       }
     });
   }

@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
+import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, SidebarComponent],
+  imports: [CommonModule, MatIconModule, MatButtonModule, SidebarComponent, StatusTemplateComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'] 
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  status: StatusType = 'loading';
+
   // Datos simulados para las 4 tarjetas superiores
   stats = [
     { title: 'Miembros Activos', value: '1,245', trend: '+4.75%', isPositive: true, icon: 'people', iconClass: 'icon-blue' },
@@ -27,4 +30,16 @@ export class DashboardComponent {
     { name: 'Juan Pérez', plan: 'Suscripción Anual', time: 'Hace 1 hora', avatar: 'https://i.pravatar.cc/150?u=3' },
     { name: 'Laura Gómez', plan: 'Mensualidad Pro', time: 'Hace 2 horas', avatar: 'https://i.pravatar.cc/150?u=4' }
   ];
+
+  ngOnInit() {
+    this.loadDashboardData();
+  }
+
+  loadDashboardData() {
+    this.status = 'loading';
+    // Simulamos una carga de datos
+    setTimeout(() => {
+      this.status = 'ok';
+    }, 800);
+  }
 }

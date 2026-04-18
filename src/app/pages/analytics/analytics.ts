@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { AnalyticsService, AnalyticsData } from '../../services/analytics.service';
+import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
 
 @Component({
   selector: 'app-analytics',
@@ -19,7 +20,8 @@ import { AnalyticsService, AnalyticsData } from '../../services/analytics.servic
     MatCardModule, 
     MatSelectModule, 
     MatFormFieldModule,
-    BaseChartDirective
+    BaseChartDirective,
+    StatusTemplateComponent
   ],
   templateUrl: './analytics.html',
   styleUrls: ['./analytics.css']
@@ -28,6 +30,7 @@ export class AnalyticsComponent implements OnInit {
   private analyticsService = inject(AnalyticsService);
   private cdr = inject(ChangeDetectorRef);
 
+  status: StatusType = 'loading';
   private allData?: AnalyticsData;
   public selectedVisitFilter: string = 'ultimos7Dias';
 
@@ -93,15 +96,22 @@ export class AnalyticsComponent implements OnInit {
   }
 
   loadData() {
+    this.status = 'loading';
     this.analyticsService.getDashboardData().subscribe({
       next: (response) => {
         if (response.success && response.data) {
           this.allData = response.data;
           this.updateCharts();
           this.cdr.detectChanges();
+          this.status = 'ok';
+        } else {
+          this.status = 'error';
         }
       },
-      error: (err) => console.error('Error loading analytics data', err)
+      error: (err) => {
+        console.error('Error loading analytics data', err);
+        this.status = 'error';
+      }
     });
   }
 

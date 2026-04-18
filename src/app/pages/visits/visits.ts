@@ -10,6 +10,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../models/visit.interface';
+import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
 
 @Component({
   selector: 'app-visits',
@@ -23,7 +24,8 @@ import { Visit } from '../../models/visit.interface';
     MatInputModule,
     MatFormFieldModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    StatusTemplateComponent
   ],
   templateUrl: './visits.html',
   styleUrls: ['./visits.css']
@@ -35,6 +37,7 @@ export class VisitsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  status: StatusType = 'loading';
   visits: Visit[] = [];
   dataSource = new MatTableDataSource<Visit>([]);
   displayedColumns: string[] = ['codigo', 'miembro', 'membresia', 'fecha', 'entrada', 'estado'];
@@ -50,6 +53,7 @@ export class VisitsComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit() {
+    this.status = 'loading';
     this.loadVisits();
     this.loadTodayStats();
   }
@@ -65,9 +69,15 @@ export class VisitsComponent implements OnInit, AfterViewInit {
           this.visits = response.data;
           this.dataSource.data = this.visits;
           this.cd.detectChanges();
+          this.status = 'ok';
+        } else {
+          this.status = 'error';
         }
       },
-      error: (error) => console.error('Error al cargar historial:', error)
+      error: (error) => {
+        console.error('Error al cargar historial:', error);
+        this.status = 'error';
+      }
     });
   }
 
