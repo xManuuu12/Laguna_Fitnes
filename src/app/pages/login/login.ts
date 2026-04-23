@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 // Importa los módulos de Angular Material 
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -22,8 +21,7 @@ import { AuthService } from '../../services/auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule
+    MatIconModule
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
