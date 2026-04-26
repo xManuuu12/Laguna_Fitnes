@@ -11,7 +11,7 @@ export class MemberService {
   private http = inject(HttpClient);
   private apiUrl = 'https://fit-manager-backend.vercel.app/api/members';
 
-  getAllMembers(page: number = 1, limit: number = 20): Observable<ApiResponse<Member[]>> {
+  getAllMembers(page: number = 1, limit: number = 1000): Observable<ApiResponse<Member[]>> {
     return this.http.get<ApiResponse<Member[]>>(`${this.apiUrl}?page=${page}&limit=${limit}`);
   }
 

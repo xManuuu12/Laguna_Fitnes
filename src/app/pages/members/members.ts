@@ -137,7 +137,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
         if (response.success && response.data) {
           this.members = response.data;
           this.dataSource.data = this.members;
-          this.calculateStats();
+          this.calculateStats(response.count);
           this.cd.detectChanges();
           this.status = 'ok';
         } else {
@@ -153,8 +153,8 @@ export class MembersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  calculateStats() {
-    this.stats.total = this.members.length;
+  calculateStats(totalCount?: number) {
+    this.stats.total = totalCount || this.members.length;
     this.stats.activos = this.members.filter(m => m.estado === 'activo').length;
     this.stats.inactivos = this.members.filter(m => m.estado === 'vencido').length;
   }
