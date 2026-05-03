@@ -129,17 +129,20 @@ export class VisitsComponent implements OnInit, AfterViewInit {
 
     this.isProcessing = true;
     
-    // 1. Verificamos el estado de la membresía antes de registrar la entrada
+    // 1. Verificamos el estado de la membresía antes de intentar registrar
     this.visitService.checkMemberStatus(socioId).subscribe({
       next: (statusRes) => {
         if (statusRes.data.estado === 'vencido') {
-           this.snackBar.open(`¡ALERTA! El socio #${socioId} tiene la membresía VENCIDA.`, 'Entendido', { 
-             duration: 5000, 
+           this.snackBar.open(`ACCESO DENEGADO: El socio #${socioId} tiene la membresía VENCIDA.`, 'Cerrar', { 
+             duration: 6000, 
              panelClass: ['snackbar-error'] 
            });
+           this.isProcessing = false;
+           this.quickCode = '';
+           return;
         }
         
-        // 2. Procedemos a registrar la entrada independientemente del aviso
+        // 2. Procedemos a registrar la entrada solo si está activo
         this.registerEntrance(socioId);
       },
       error: (err: any) => {
@@ -152,7 +155,10 @@ export class VisitsComponent implements OnInit, AfterViewInit {
   private registerEntrance(socioId: number) {
     this.visitService.registerVisit(socioId).subscribe({
       next: (response) => {
-        this.snackBar.open('¡Acceso concedido! Entrada registrada.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('¡Acceso concedido! Entrada registrada.', 'Cerrar', { 
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
         this.quickCode = '';
         this.isProcessing = false;
         // Si la fecha seleccionada es hoy, recargamos la lista
@@ -164,7 +170,12 @@ export class VisitsComponent implements OnInit, AfterViewInit {
         this.loadTodayStats();
       },
       error: (err: any) => {
-        this.snackBar.open('Error al registrar la visita en el servidor', 'Cerrar', { duration: 3000 });
+        // Si el backend devuelve un error específico (ej. membresía vencida)
+        const errorMessage = err.error?.message || 'Error al registrar la visita';
+        this.snackBar.open(`No se pudo registrar: ${errorMessage}`, 'Cerrar', { 
+          duration: 5000,
+          panelClass: ['snackbar-error']
+        });
         this.isProcessing = false;
       }
     });
