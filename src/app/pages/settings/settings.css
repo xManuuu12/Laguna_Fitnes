@@ -91,10 +91,19 @@
 /* Table Styles - Aligned with Standard */
 .table-container {
   background: white;
+  overflow: auto;
+  max-height: 400px;
 }
 
 table {
   width: 100%;
+}
+
+.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #f8fafc;
 }
 
 .mat-mdc-header-cell {

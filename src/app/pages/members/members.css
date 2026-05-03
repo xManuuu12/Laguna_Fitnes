@@ -82,12 +82,20 @@
   background: white;
   border-radius: 16px;
   border: 1px solid #e2e8f0;
-  overflow: hidden;
+  overflow: auto;
   margin-bottom: 2rem;
+  max-height: 500px;
 }
 
 table {
   width: 100%;
+}
+
+.mat-mdc-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #f8fafc;
 }
 
 .mat-mdc-header-cell {
