@@ -14,9 +14,14 @@ export class VisitService {
 
   /**
    * Obtener todas las visitas (Historial)
+   * @param fecha Opcional: Filtra por una fecha específica (YYYY-MM-DD)
    */
-  getAllVisits(): Observable<ApiResponse<any[]>> {
-    return this.http.get<ApiResponse<any[]>>(this.apiUrl);
+  getAllVisits(fecha?: string): Observable<ApiResponse<any[]>> {
+    let url = this.apiUrl;
+    if (fecha) {
+      url += `?fecha=${fecha}`;
+    }
+    return this.http.get<ApiResponse<any[]>>(url);
   }
 
   /**

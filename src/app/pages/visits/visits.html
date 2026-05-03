@@ -49,14 +49,22 @@
     <!-- 3. History Table Card -->
     <div class="card table-card">
       <div class="card-header">
-        <div>
-          <h2 class="card-title">Visitas de hoy</h2>
-          <p class="current-date">{{ todayDate | date:'fullDate' }}</p>
+        <div class="header-info">
+          <h2 class="card-title">Historial de Visitas</h2>
+          <div class="date-selector">
+            <mat-form-field appearance="outline" class="datepicker-field">
+              <mat-label>Seleccionar Fecha</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="onDateChange()">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <p class="current-date-text">{{ selectedDate | date:'fullDate' }}</p>
+          </div>
         </div>
         <div class="table-actions">
           <div class="search-box">
             <mat-icon>search</mat-icon>
-            <input type="text" (keyup)="applyFilter($event)" placeholder="Filtrar visitas...">
+            <input type="text" (keyup)="applyFilter($event)" placeholder="Filtrar por nombre o ID...">
           </div>
         </div>
       </div>

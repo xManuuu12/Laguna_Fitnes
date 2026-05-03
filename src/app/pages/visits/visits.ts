@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../models/visit.interface';
 import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
@@ -15,6 +17,7 @@ import { StatusTemplateComponent, StatusType } from '../../components/status-tem
 @Component({
   selector: 'app-visits',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   imports: [
     CommonModule,
     FormsModule,
@@ -25,6 +28,7 @@ import { StatusTemplateComponent, StatusType } from '../../components/status-tem
     MatFormFieldModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatDatepickerModule,
     StatusTemplateComponent
   ],
   templateUrl: './visits.html',
@@ -42,7 +46,7 @@ export class VisitsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Visit>([]);
   displayedColumns: string[] = ['codigo', 'miembro', 'membresia', 'fecha', 'entrada', 'estado'];
   
-  todayDate = new Date();
+  selectedDate: Date = new Date();
   quickCode: string = '';
   isProcessing = false;
 
@@ -62,8 +66,14 @@ export class VisitsComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  onDateChange() {
+    this.status = 'loading';
+    this.loadVisits();
+  }
+
   loadVisits() {
-    this.visitService.getAllVisits().subscribe({
+    const formattedDate = this.formatDate(this.selectedDate);
+    this.visitService.getAllVisits(formattedDate).subscribe({
       next: (response) => {
         if (response.success && response.data) {
           this.visits = response.data;
@@ -79,6 +89,13 @@ export class VisitsComponent implements OnInit, AfterViewInit {
         this.status = 'error';
       }
     });
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   loadTodayStats() {
@@ -138,7 +155,12 @@ export class VisitsComponent implements OnInit, AfterViewInit {
         this.snackBar.open('¡Acceso concedido! Entrada registrada.', 'Cerrar', { duration: 3000 });
         this.quickCode = '';
         this.isProcessing = false;
-        this.loadVisits();
+        // Si la fecha seleccionada es hoy, recargamos la lista
+        const hoy = this.formatDate(new Date());
+        const seleccionada = this.formatDate(this.selectedDate);
+        if (hoy === seleccionada) {
+          this.loadVisits();
+        }
         this.loadTodayStats();
       },
       error: (err: any) => {
@@ -153,3 +175,4 @@ export class VisitsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
+
