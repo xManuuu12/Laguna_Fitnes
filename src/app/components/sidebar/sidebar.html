@@ -1,31 +1,42 @@
-<div class="dashboard-layout">
+<div class="dashboard-layout" [class.collapsed]="isCollapsed">
   
   <aside class="sidebar">
     <div class="sidebar__brand">
       <mat-icon color="primary" class="brand-icon material-icons-outlined">fitness_center</mat-icon>
-      <h2>LagunaFitnes</h2>
+      <h2 *ngIf="!isCollapsed">LagunaFitnes</h2>
+      <button mat-icon-button class="toggle-btn" (click)="toggleSidebar()">
+        <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
+      </button>
     </div>
 
     <nav class="sidebar__nav">
-      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
-        <mat-icon>dashboard</mat-icon>Dashboard
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item" title="Dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span class="nav-label">Dashboard</span>
       </a>
-      <a routerLink="/members" routerLinkActive="active" class="nav-item">
-        <mat-icon>group</mat-icon>Miembros
+      <a routerLink="/members" routerLinkActive="active" class="nav-item" title="Miembros">
+        <mat-icon>group</mat-icon>
+        <span class="nav-label">Miembros</span>
       </a>
-      <a routerLink="/visits" routerLinkActive="active" class="nav-item">
-        <mat-icon>event_available</mat-icon>Visitas
+      <a routerLink="/visits" routerLinkActive="active" class="nav-item" title="Visitas">
+        <mat-icon>event_available</mat-icon>
+        <span class="nav-label">Visitas</span>
       </a>
-      <a routerLink="/analytics" routerLinkActive="active" class="nav-item">
-        <mat-icon>analytics</mat-icon>Analíticas
+      <a routerLink="/analytics" routerLinkActive="active" class="nav-item" title="Analíticas">
+        <mat-icon>analytics</mat-icon>
+        <span class="nav-label">Analíticas</span>
       </a>
-      <a routerLink="/settings" routerLinkActive="active" class="nav-item">
-        <mat-icon>settings</mat-icon>Configuración
+      <a routerLink="/settings" routerLinkActive="active" class="nav-item" title="Configuración">
+        <mat-icon>settings</mat-icon>
+        <span class="nav-label">Configuración</span>
       </a>
     </nav>
 
     <div class="sidebar__footer">
-      <a routerLink="/" class="nav-item">Cerrar Sesión</a>
+      <button (click)="authService.logout()" class="nav-item btn-logout" title="Cerrar Sesión">
+        <mat-icon>logout</mat-icon>
+        <span class="nav-label">Cerrar Sesión</span>
+      </button>
     </div>
   </aside>
 
@@ -38,15 +49,15 @@
       </div>
       <div class="topbar__actions">
         <button mat-icon-button><mat-icon>notifications</mat-icon></button>
-        <div class="user-profile">
-          <img src="https://i.pravatar.cc/150?img=11" alt="Admin" class="avatar">
-          <span>Admin User</span>
+        <div class="user-profile" *ngIf="authService.currentUser$ | async as user">
+          <img [src]="'https://ui-avatars.com/api/?name=' + user.nombre + '&background=random'" [alt]="user.nombre" class="avatar">
+          <span>{{ user.nombre }}</span>
         </div>
       </div>
     </header>
 
     <main class="content">
-  <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </main>
   </div>
 </div>

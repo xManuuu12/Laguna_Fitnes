@@ -11,6 +11,22 @@
     </div>
   </div>
 
+  <div class="summary-row" *ngIf="status === 'ok'">
+    <mat-card class="summary-card income-summary">
+      <mat-card-content>
+        <div class="summary-body">
+          <div class="icon-circle">
+            <mat-icon>payments</mat-icon>
+          </div>
+          <div class="summary-info">
+            <span class="label">Ingresos Totales</span>
+            <h2 class="value">{{ totalIncome | currency:'MXN':'$':'1.0-0' }}</h2>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
   <div class="analytics-grid">
     <!-- Tarjeta de Estado de Miembros (Pie) -->
     <mat-card class="chart-card">
@@ -41,6 +57,23 @@
             [data]="barChartData"
             [options]="barChartOptions"
             [type]="barChartType">
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Tarjeta de Ingresos por Membresía (Bar) -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Ingresos por Membresía</mat-card-title>
+        <mat-card-subtitle>Recaudación total por plan</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <canvas baseChart
+            [data]="incomeChartData"
+            [options]="incomeChartOptions"
+            [type]="'bar'">
           </canvas>
         </div>
       </mat-card-content>

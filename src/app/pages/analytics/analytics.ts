@@ -91,6 +91,48 @@ export class AnalyticsComponent implements OnInit {
     }
   };
 
+  // Chart: Ingresos por Membresía (Bar)
+  public incomeChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: { 
+      y: { 
+        beginAtZero: true,
+        grid: { color: '#f1f5f9' },
+        ticks: {
+          callback: (value) => '$' + value
+        }
+      },
+      x: { grid: { display: false } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            let label = context.dataset.label || '';
+            if (label) label += ': ';
+            if (context.parsed.y !== null) {
+              label += new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(context.parsed.y);
+            }
+            return label;
+          }
+        }
+      }
+    }
+  };
+  public incomeChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [{ 
+      data: [], 
+      label: 'Ingresos', 
+      backgroundColor: '#10b981',
+      borderRadius: 6,
+      hoverBackgroundColor: '#059669'
+    }]
+  };
+  public totalIncome: number = 0;
+
   ngOnInit() {
     this.status = 'loading';
     this.loadData();
@@ -124,10 +166,17 @@ export class AnalyticsComponent implements OnInit {
     this.pieChartData.datasets[0].data = [this.allData.estados.activos, this.allData.estados.inactivos];
     this.pieChartData = { ...this.pieChartData };
 
-    // Bar Chart
+    // Bar Chart (Distribución)
     this.barChartData.labels = this.allData.distribucion.map(d => d.nombre);
     this.barChartData.datasets[0].data = this.allData.distribucion.map(d => d.cantidad);
     this.barChartData = { ...this.barChartData };
+
+    // Bar Chart (Ingresos)
+    this.incomeChartData.labels = this.allData.ingresos.map(i => i.nombre);
+    this.incomeChartData.datasets[0].data = this.allData.ingresos.map(i => i.total);
+    this.incomeChartData = { ...this.incomeChartData };
+    
+    this.totalIncome = this.allData.ingresos.reduce((sum, i) => sum + i.total, 0);
 
     // Line Chart (Visitas)
     this.updateVisitChart();

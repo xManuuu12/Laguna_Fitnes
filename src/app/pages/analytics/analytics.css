@@ -28,6 +28,58 @@
   gap: 0.5rem;
 }
 
+.summary-row {
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  border-radius: 16px !important;
+  border: 1px solid #f1f5f9 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  background: white !important;
+  max-width: 300px;
+}
+
+.income-summary {
+  border-left: 4px solid #10b981 !important;
+}
+
+.summary-body {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #ecfdf5;
+  color: #10b981;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-info .label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.summary-info .value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
 .analytics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
