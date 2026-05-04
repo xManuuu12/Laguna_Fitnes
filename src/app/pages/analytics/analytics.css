@@ -82,11 +82,12 @@
 
 .analytics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 1.5rem;
 }
 
 .chart-card {
+  width: 100%;
   border-radius: 16px !important;
   border: 1px solid #f1f5f9 !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
@@ -99,21 +100,28 @@
 }
 
 .chart-container {
-  height: 300px;
+  height: 320px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .chart-container-large {
   height: 400px;
-  padding: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 mat-card-header {
-  margin-bottom: 1rem;
-  padding: 1.5rem 1.5rem 0 !important;
+  margin-bottom: 0.5rem;
+  padding: 1.25rem 1.25rem 0 !important;
 }
 
 .header-with-filter {
@@ -123,7 +131,7 @@ mat-card-header {
 }
 
 .filter-container {
-  min-width: 250px;
+  min-width: 200px;
 }
 
 .filter-container mat-form-field {
@@ -131,17 +139,18 @@ mat-card-header {
 }
 
 mat-card-title {
-  font-size: 1.25rem !important;
+  font-size: 1.15rem !important;
   font-weight: 600 !important;
   color: #1e293b !important;
 }
 
 mat-card-subtitle {
   color: #64748b !important;
+  font-size: 0.85rem !important;
 }
 
 mat-card-content {
-  padding: 0 1.5rem 1.5rem !important;
+  padding: 0 1.25rem 1.25rem !important;
 }
 
 @media (max-width: 768px) {

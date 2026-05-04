@@ -18,5 +18,10 @@ export class SidebarComponent {
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+    
+    // Disparar evento de redimensionamiento para que las gráficas se ajusten
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 300); // Esperar a que termine la animación (0.3s)
   }
 }
