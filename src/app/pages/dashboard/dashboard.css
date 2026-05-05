@@ -1,24 +1,29 @@
-.dashboard-photo-placeholder {
+.dashboard-title-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 120px);
   min-height: 400px;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/gimnasio_fondo.png') center/cover no-repeat;
-  background-color: var(--primary-color, #3b82f6);
-  border-radius: 16px;
   margin: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-.dashboard-photo-placeholder h1 {
-  font-size: 5vw;
+.dashboard-title-container h1 {
+  font-size: 6vw;
   font-weight: 900;
-  color: white;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.1em;
   text-align: center;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(45deg, var(--primary-color, #10b981), #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .dashboard-title-container h1 {
+    font-size: 12vw;
+  }
 }
