@@ -47,7 +47,7 @@ export class AuthService {
       sessionStorage.removeItem('user');
     }
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   getToken(): string | null {
