@@ -1,6 +1,7 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthResponse, User } from '../models/auth.interface';
 import { ApiResponse } from '../models/api-response.interface';
@@ -12,6 +13,7 @@ import { ApiResponse } from '../models/api-response.interface';
 export class AuthService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
   private apiUrl = 'https://fit-manager-backend.vercel.app/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
   //private apiUrl = 'https://fit-manager-backend.vercel.app/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
   
@@ -45,6 +47,7 @@ export class AuthService {
       sessionStorage.removeItem('user');
     }
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
   getToken(): string | null {
