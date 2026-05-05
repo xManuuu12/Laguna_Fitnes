@@ -149,6 +149,12 @@
   padding: 0 2rem;
 }
 
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .search-bar {
   display: flex;
   align-items: center;

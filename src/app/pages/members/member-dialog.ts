@@ -52,8 +52,7 @@ export class MemberDialogComponent implements OnInit {
     if (this.data?.member) {
       this.isEditMode = true;
       this.memberForm.patchValue(this.data.member);
-      // Desactivar campos de pago en modo edición
-      this.memberForm.get('registrar_pago')?.disable();
+      // Permitimos registrar pago también en modo edición
     }
 
     // Suscribirse a cambios en registrar_pago para validar campos de membresía

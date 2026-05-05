@@ -1,101 +1,24 @@
-.content__header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; }
-.content__header h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 4px 0; }
-.subtitle { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
-.header-actions { display: flex; gap: 1rem; }
-
-/* Botones personalizados */
-.btn-primary { background-color: var(--primary-color) !important; color: white !important; border-radius: 8px !important; padding: 0 20px !important; }
-.btn-outline { border-color: var(--border-color) !important; border-radius: 8px !important; color: var(--text-main) !important; }
-
-/* --- GRID DE ESTADÍSTICAS --- */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.5rem;
+.dashboard-photo-placeholder {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.stat-icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
   justify-content: center;
-}
-/* Colores dinámicos para iconos */
-.icon-blue { background-color: #eff6ff; color: #3b82f6; }
-.icon-green { background-color: #ecfdf5; color: #10b981; }
-.icon-yellow { background-color: #fffbeb; color: #f59e0b; }
-.icon-purple { background-color: #f5f3ff; color: #8b5cf6; }
-
-.stat-info { display: flex; flex-direction: column; }
-.stat-title { color: var(--text-muted); font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
-.stat-value-row { display: flex; align-items: baseline; gap: 8px; }
-.stat-value { font-size: 1.5rem; font-weight: 700; color: var(--text-main); }
-.stat-trend { font-size: 0.75rem; font-weight: 600; }
-.trend-up { color: var(--primary-color); }
-.trend-down { color: #ef4444; }
-
-/* --- GRID INFERIOR (Gráfica y Visitas) --- */
-.bottom-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1.5rem;
-}
-
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
-.card-header h3 { margin: 0 0 4px 0; font-size: 1.1rem; font-weight: 600; }
-.subtitle-small { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
-.link-primary { color: var(--primary-color); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
-
-.custom-select {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-card);
-  color: var(--text-main);
-  outline: none;
-}
-
-.chart-placeholder {
-  height: 250px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: var(--bg-app);
-  border-radius: 8px;
-  border: 1px dashed #cbd5e1;
-  color: var(--text-muted);
+  height: calc(100vh - 120px);
+  min-height: 400px;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('/gimnasio_fondo.png') center/cover no-repeat;
+  background-color: var(--primary-color, #3b82f6);
+  border-radius: 16px;
+  margin: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Lista de visitas */
-.visits-list { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 1.5rem; }
-.visit-item { display: flex; align-items: center; gap: 12px; }
-.visit-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
-.visit-details { flex: 1; display: flex; flex-direction: column; }
-.visit-name { font-weight: 600; font-size: 0.9rem; }
-.visit-plan { font-size: 0.8rem; color: var(--text-muted); }
-.visit-time { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; background: var(--bg-app); padding: 4px 8px; border-radius: 12px;}
-
-.btn-full-width { width: 100%; border-radius: 8px !important; border-color: var(--border-color) !important; color: var(--text-main) !important; }
+.dashboard-photo-placeholder h1 {
+  font-size: 5vw;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

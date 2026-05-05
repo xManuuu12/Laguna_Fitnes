@@ -4,9 +4,6 @@
     <div class="sidebar__brand">
       <mat-icon color="primary" class="brand-icon material-icons-outlined">fitness_center</mat-icon>
       <h2 *ngIf="!isCollapsed">LagunaFitnes</h2>
-      <button mat-icon-button class="toggle-btn" (click)="toggleSidebar()">
-        <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
-      </button>
     </div>
 
     <nav class="sidebar__nav">
@@ -43,9 +40,14 @@
   <div class="main-wrapper">
     
     <header class="topbar">
-      <div class="search-bar">
-        <mat-icon class="search-icon">search</mat-icon>
-        <input type="text" placeholder="Buscar miembro o documento...">
+      <div class="topbar-left">
+        <button mat-icon-button class="toggle-btn" (click)="toggleSidebar()">
+          <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
+        </button>
+        <div class="search-bar">
+          <mat-icon class="search-icon">search</mat-icon>
+          <input type="text" placeholder="Buscar miembro o documento...">
+        </div>
       </div>
       <div class="topbar__actions">
         <button mat-icon-button><mat-icon>notifications</mat-icon></button>

@@ -29,10 +29,10 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- Sección de Pago (Solo para nuevos miembros) -->
-    <div *ngIf="!isEditMode" class="payment-section">
+    <!-- Sección de Pago -->
+    <div class="payment-section">
       <mat-checkbox formControlName="registrar_pago" color="primary">
-        Registrar pago inicial ahora
+        {{ isEditMode ? 'Registrar nuevo pago' : 'Registrar pago inicial ahora' }}
       </mat-checkbox>
 
       <div *ngIf="memberForm.get('registrar_pago')?.value" class="payment-fields">

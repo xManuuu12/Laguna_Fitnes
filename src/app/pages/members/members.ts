@@ -199,7 +199,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  registerInitialPayment(id_miembro: number, id_membresia: number, metodo_pago: any) {
+  registerInitialPayment(id_miembro: number, id_membresia: number, metodo_pago: any, successMessage: string = 'Miembro y pago inicial registrados') {
     this.membresiaService.getAllMembresias().subscribe(response => {
       const membresia = response.data?.find(m => m.id_membresia === id_membresia);
       if (membresia) {
@@ -216,12 +216,12 @@ export class MembersComponent implements OnInit, AfterViewInit {
 
         this.paymentService.createPayment(payment).subscribe({
           next: () => {
-            this.snackBar.open('Miembro y pago inicial registrados', 'Cerrar', { duration: 3000 });
+            this.snackBar.open(successMessage, 'Cerrar', { duration: 3000 });
             this.loadMembers();
           },
           error: (err: any) => {
-            console.error('Error creating initial payment:', err);
-            this.snackBar.open('Miembro creado, pero error al registrar pago inicial', 'Cerrar', { duration: 3000 });
+            console.error('Error creating payment:', err);
+            this.snackBar.open('Operación realizada, pero error al registrar pago', 'Cerrar', { duration: 3000 });
             this.loadMembers();
           }
         });
@@ -237,10 +237,16 @@ export class MembersComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && member.id_miembro) {
-        this.memberService.updateMember(member.id_miembro, result).subscribe({
+        const { registrar_pago, id_membresia, metodo_pago, ...memberData } = result;
+        
+        this.memberService.updateMember(member.id_miembro, memberData).subscribe({
           next: () => {
-            this.snackBar.open('Miembro actualizado correctamente', 'Cerrar', { duration: 3000 });
-            this.loadMembers();
+            if (registrar_pago && id_membresia) {
+              this.registerInitialPayment(member.id_miembro!, id_membresia, metodo_pago, 'Miembro actualizado y pago registrado exitosamente');
+            } else {
+              this.snackBar.open('Miembro actualizado correctamente', 'Cerrar', { duration: 3000 });
+              this.loadMembers();
+            }
           },
           error: (err: any) => {
             console.error('Error updating member:', err);
