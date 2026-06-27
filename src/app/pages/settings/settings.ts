@@ -172,7 +172,8 @@ export class SettingsComponent implements OnInit {
           this.snackBar.open('Usuario actualizado', 'Cerrar', { duration: 3000 });
           this.resetUserForm();
           this.loadUsers();
-        }
+        },
+        error: (err) => this.showError(err, 'No se pudo actualizar el usuario')
       });
     } else {
       this.authService.createUser(this.userForm.value).subscribe({
@@ -180,7 +181,8 @@ export class SettingsComponent implements OnInit {
           this.snackBar.open('Usuario creado', 'Cerrar', { duration: 3000 });
           this.resetUserForm();
           this.loadUsers();
-        }
+        },
+        error: (err) => this.showError(err, 'No se pudo crear el usuario')
       });
     }
   }
@@ -203,9 +205,18 @@ export class SettingsComponent implements OnInit {
         next: () => {
           this.snackBar.open('Usuario eliminado', 'Cerrar', { duration: 3000 });
           this.loadUsers();
-        }
+        },
+        error: (err) => this.showError(err, 'No se pudo eliminar el usuario')
       });
     }
+  }
+
+  // Muestra el mensaje de error del backend (p. ej. guardas anti-lockout:
+  // "no puedes eliminar tu propio usuario" / "último administrador") o un
+  // fallback genérico si la respuesta no trae detalle.
+  private showError(err: any, fallback: string) {
+    const message = err?.error?.error || err?.error?.message || fallback;
+    this.snackBar.open(message, 'Cerrar', { duration: 4000 });
   }
 
   resetUserForm() {

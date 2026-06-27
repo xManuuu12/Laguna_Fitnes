@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { AuthResponse, User } from '../models/auth.interface';
+import { AuthResponse, User, UserPayload } from '../models/auth.interface';
 import { ApiResponse } from '../models/api-response.interface';
 
 
@@ -70,15 +70,17 @@ export class AuthService {
     return this.http.get<ApiResponse<User[]>>(`${this.apiUrl}/users`);
   }
 
-  createUser(user: any): Observable<ApiResponse<User>> {
+  createUser(user: UserPayload): Observable<ApiResponse<User>> {
     return this.http.post<ApiResponse<User>>(`${this.apiUrl}/staff`, user);
   }
 
-  updateUser(id: number, user: Partial<User>): Observable<ApiResponse<User>> {
-    return this.http.put<ApiResponse<User>>(`${this.apiUrl}/${id}`, user);
+  // PUT /auth/users/:id — actualiza un usuario del gimnasio actual.
+  updateUser(id: number, user: UserPayload): Observable<ApiResponse<User>> {
+    return this.http.put<ApiResponse<User>>(`${this.apiUrl}/users/${id}`, user);
   }
 
-  deleteUser(id: number): Observable<ApiResponse<any>> {
-    return this.http.delete<ApiResponse<any>>(`${this.apiUrl}/${id}`);
+  // DELETE /auth/users/:id — borrado físico (con guardas anti-lockout en backend).
+  deleteUser(id: number): Observable<ApiResponse<null>> {
+    return this.http.delete<ApiResponse<null>>(`${this.apiUrl}/users/${id}`);
   }
 }
