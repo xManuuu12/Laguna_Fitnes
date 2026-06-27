@@ -1,6 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +17,7 @@ import { AuthService } from '../../services/auth.service';
 import { Membresia } from '../../models/membresia.interface';
 import { User } from '../../models/auth.interface';
 import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
+import { ConfirmDialogComponent } from '../members/confirm-dialog';
 
 @Component({
   selector: 'app-settings',
@@ -33,6 +35,7 @@ import { StatusTemplateComponent, StatusType } from '../../components/status-tem
     MatCardModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatDialogModule,
     StatusTemplateComponent
   ],
   templateUrl: './settings.html',
@@ -43,6 +46,13 @@ export class SettingsComponent implements OnInit {
   private membresiaService = inject(MembresiaService);
   private authService = inject(AuthService);
   private snackBar = inject(MatSnackBar);
+  private dialog = inject(MatDialog);
+
+  // Referencias a las directivas de formulario para poder limpiar el estado
+  // `submitted` al resetear (FormGroup.reset() no lo hace, y por eso los
+  // campos se quedaban en rojo tras Aceptar).
+  @ViewChild('membresiaFormDir') membresiaFormDir!: FormGroupDirective;
+  @ViewChild('userFormDir') userFormDir!: FormGroupDirective;
 
   status: StatusType = 'loading';
   // Membresías
@@ -128,18 +138,30 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteMembresia(id: number) {
-    if (confirm('¿Estás seguro de eliminar esta membresía?')) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmar Eliminación',
+        message: '¿Estás seguro de que deseas eliminar esta membresía? Esta acción no se puede deshacer.'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
       this.membresiaService.deleteMembresia(id).subscribe({
         next: () => {
           this.snackBar.open('Membresía eliminada', 'Cerrar', { duration: 3000 });
           this.loadMembresias();
-        }
+        },
+        error: (err) => this.showError(err, 'No se pudo eliminar la membresía')
       });
-    }
+    });
   }
 
   resetMembresiaForm() {
-    this.membresiaForm.reset();
+    // resetForm() (de la directiva) también limpia `submitted`, dejando los
+    // campos sin marca de error tras guardar/cancelar.
+    this.membresiaFormDir.resetForm();
     this.editingMembresiaId = null;
   }
 
@@ -200,7 +222,16 @@ export class SettingsComponent implements OnInit {
   }
 
   deleteUser(id: number) {
-    if (confirm('¿Estás seguro de eliminar este usuario?')) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmar Eliminación',
+        message: '¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer.'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (!confirmed) return;
       this.authService.deleteUser(id).subscribe({
         next: () => {
           this.snackBar.open('Usuario eliminado', 'Cerrar', { duration: 3000 });
@@ -208,7 +239,7 @@ export class SettingsComponent implements OnInit {
         },
         error: (err) => this.showError(err, 'No se pudo eliminar el usuario')
       });
-    }
+    });
   }
 
   // Muestra el mensaje de error del backend (p. ej. guardas anti-lockout:
@@ -220,7 +251,9 @@ export class SettingsComponent implements OnInit {
   }
 
   resetUserForm() {
-    this.userForm.reset({ rol: 'recepcion' });
+    // resetForm() limpia valores, touched/pristine y `submitted` de la
+    // directiva, evitando que los campos se queden en rojo tras Aceptar.
+    this.userFormDir.resetForm({ rol: 'recepcion' });
     this.editingUserId = null;
     this.userForm.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
     this.userForm.get('password')?.updateValueAndValidity();

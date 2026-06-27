@@ -21,7 +21,7 @@
                 <h2 class="card-title">{{ editingMembresiaId ? 'Editar' : 'Nueva' }} Membresía</h2>
               </div>
               <div class="card-content">
-                <form [formGroup]="membresiaForm" (ngSubmit)="onSubmitMembresia()" class="settings-form">
+                <form [formGroup]="membresiaForm" #membresiaFormDir="ngForm" (ngSubmit)="onSubmitMembresia()" class="settings-form">
                   <mat-form-field appearance="outline">
                     <mat-label>Nombre del Plan</mat-label>
                     <input matInput formControlName="nombre" placeholder="Ej. Mensualidad">
@@ -109,7 +109,7 @@
                 <h2 class="card-title">{{ editingUserId ? 'Editar' : 'Nuevo' }} Usuario</h2>
               </div>
               <div class="card-content">
-                <form [formGroup]="userForm" (ngSubmit)="onSubmitUser()" class="settings-form">
+                <form [formGroup]="userForm" #userFormDir="ngForm" (ngSubmit)="onSubmitUser()" class="settings-form">
                   <mat-form-field appearance="outline">
                     <mat-label>Nombre Completo</mat-label>
                     <input matInput formControlName="nombre">
