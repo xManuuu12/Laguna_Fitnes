@@ -17,6 +17,7 @@ import { Member } from '../../models/member.interface';
 import { Membresia } from '../../models/membresia.interface';
 import { MemberDialogComponent } from './member-dialog';
 import { ConfirmDialogComponent } from './confirm-dialog';
+import { toLocalISODate } from '../../utils/date.util';
 
 import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
 
@@ -211,7 +212,7 @@ export class MembersComponent implements OnInit, AfterViewInit {
           id_membresia,
           monto: membresia.precio,
           metodo_pago,
-          fecha_vencimiento: fechaVencimiento.toISOString().split('T')[0]
+          fecha_vencimiento: toLocalISODate(fechaVencimiento) // fecha local, NO UTC
         };
 
         this.paymentService.createPayment(payment).subscribe({

@@ -9,6 +9,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { AnalyticsService, AnalyticsData } from '../../services/analytics.service';
 import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
+import { toLocalISODate } from '../../utils/date.util';
 
 @Component({
   selector: 'app-analytics',
@@ -233,7 +234,7 @@ export class AnalyticsComponent implements OnInit {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `Reporte_Analytics_${new Date().toISOString().split('T')[0]}.xlsx`;
+      a.download = `Reporte_Analytics_${toLocalISODate()}.xlsx`;
       a.click();
       window.URL.revokeObjectURL(url);
     });

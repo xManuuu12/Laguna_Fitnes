@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Visit } from '../models/visit.interface';
 import { ApiResponse } from '../models/api-response.interface';
+import { toLocalISODate } from '../utils/date.util';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class VisitService {
   registerVisit(id_socio: number): Observable<ApiResponse<any>> {
     const payload = {
       id_miembro: id_socio,
-      fecha: new Date().toISOString().split('T')[0],
+      fecha: toLocalISODate(), // fecha local, NO UTC (evita adelantar el día)
       hora_entrada: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
     };
     return this.http.post<ApiResponse<any>>(this.apiUrl, payload);

@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MemberService } from '../../services/member.service';
 import { Member } from '../../models/member.interface';
 import { Observable, map, startWith } from 'rxjs';
+import { toLocalISODate } from '../../utils/date.util';
 
 @Component({
   selector: 'app-visit-dialog',
@@ -36,7 +37,7 @@ export class VisitDialogComponent implements OnInit {
 
   visitForm: FormGroup = this.fb.group({
     id_miembro: ['', [Validators.required]],
-    fecha_visita: [new Date().toISOString().split('T')[0], [Validators.required]],
+    fecha_visita: [toLocalISODate(), [Validators.required]],
     hora_entrada: [new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }), [Validators.required]],
     comentarios: ['']
   });
