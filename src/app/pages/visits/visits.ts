@@ -98,6 +98,18 @@ export class VisitsComponent implements OnInit, AfterViewInit {
     return `${year}-${month}-${day}`;
   }
 
+  /**
+   * Muestra la fecha EXACTAMENTE como la registró el backend (su día local),
+   * tomando solo la parte YYYY-MM-DD del ISO. NO usa Date ni DatePipe, así
+   * evita que la conversión a la zona del navegador/servidor SSR desplace el
+   * día (p. ej. 2026-06-26T22:31-06:00 -> 2026-06-27 en UTC).
+   */
+  formatVisitDate(iso: string): string {
+    if (!iso) return '';
+    const [year, month, day] = iso.split('T')[0].split('-');
+    return `${day}/${month}/${year}`;
+  }
+
   loadTodayStats() {
     this.visitService.getTodayStats().subscribe({
       next: (response) => {
@@ -113,8 +125,7 @@ export class VisitsComponent implements OnInit, AfterViewInit {
   }
 
   private calculateStatsLocally() {
-    const now = new Date();
-    const hoyStr = now.toISOString().split('T')[0];
+    const hoyStr = this.formatDate(new Date()); // fecha local, no UTC
     this.stats.hoy = this.visits.filter(v => v.fecha_visita?.startsWith(hoyStr)).length;
     this.stats.ultimaHora = Math.floor(this.stats.hoy * 0.15); // Simulamos
     this.stats.promedioDiario = 50; // Ejemplo
