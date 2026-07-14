@@ -19,11 +19,11 @@
         <mat-icon>event_available</mat-icon>
         <span class="nav-label">Visitas</span>
       </a>
-      <a routerLink="/analytics" routerLinkActive="active" class="nav-item" title="Analíticas">
+      <a *ngIf="isAdmin" routerLink="/analytics" routerLinkActive="active" class="nav-item" title="Analíticas">
         <mat-icon>analytics</mat-icon>
         <span class="nav-label">Analíticas</span>
       </a>
-      <a routerLink="/settings" routerLinkActive="active" class="nav-item" title="Configuración">
+      <a *ngIf="isAdmin" routerLink="/settings" routerLinkActive="active" class="nav-item" title="Configuración">
         <mat-icon>settings</mat-icon>
         <span class="nav-label">Configuración</span>
       </a>

@@ -61,6 +61,32 @@ export class AuthService {
     return !!this.getToken();
   }
 
+  /**
+   * Extrae el rol del payload del JWT (el backend lo firma en el token).
+   * El token es la fuente de verdad: viene firmado por el servidor.
+   * Devuelve null si no hay token o si no se puede decodificar.
+   */
+  getRole(): User['rol'] | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = token.split('.')[1];
+      // JWT usa base64url: hay que convertirlo a base64 estándar antes de atob.
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const decoded = JSON.parse(atob(base64));
+      return decoded.rol ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'admin';
+  }
+
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }

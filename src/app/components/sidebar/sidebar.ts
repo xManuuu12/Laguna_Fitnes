@@ -15,6 +15,8 @@ import { AuthService } from '../../services/auth.service';
 export class SidebarComponent {
   public authService = inject(AuthService);
   public isCollapsed = false;
+  // Rol tomado del token; el sidebar solo se instancia tras el login.
+  public isAdmin = this.authService.isAdmin();
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;

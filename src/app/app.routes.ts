@@ -6,6 +6,7 @@ import { VisitsComponent } from './pages/visits/visits';
 import { SettingsComponent } from './pages/settings/settings';
 import { SidebarComponent } from './components/sidebar/sidebar';
 import { AnalyticsComponent } from './pages/analytics/analytics';
+import { roleGuard } from './guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -15,7 +16,10 @@ export const routes: Routes = [
   {
     path: '',
     component: SidebarComponent,
+    // El shell requiere estar autenticado; sin token el guard redirige al login.
+    canActivate: [roleGuard],
     children: [
+      // Accesibles para admin y recepcion (sin restricción de rol).
       {
         path: 'dashboard',
         component: DashboardComponent
@@ -28,13 +32,18 @@ export const routes: Routes = [
         path: 'visits',
         component: VisitsComponent
       },
+      // Solo admin.
       {
         path: 'analytics',
-        component: AnalyticsComponent
+        component: AnalyticsComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['admin'] }
       },
       {
         path: 'settings',
-        component: SettingsComponent
+        component: SettingsComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['admin'] }
       }
     ]
   }
