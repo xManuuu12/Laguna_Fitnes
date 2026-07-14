@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { AuthResponse, User, UserPayload } from '../models/auth.interface';
 import { ApiResponse } from '../models/api-response.interface';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -14,8 +15,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
-  private apiUrl = 'https://fit-manager-backend.vercel.app/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
-  //private apiUrl = 'https://fit-manager-backend.vercel.app/api/auth'; // Asegúrate de que esta URL coincida con la de tu backend
+  private apiUrl = `${environment.apiUrl}auth`;
   
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();

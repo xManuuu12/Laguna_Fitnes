@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Payment } from '../models/payment.interface';
 import { ApiResponse } from '../models/api-response.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://fit-manager-backend.vercel.app/api/payments';
+  private apiUrl = `${environment.apiUrl}payments`;
 
   getAllPayments(page: number = 1, limit: number = 10): Observable<ApiResponse<Payment[]>> {
     return this.http.get<ApiResponse<Payment[]>>(`${this.apiUrl}?page=${page}&limit=${limit}`);

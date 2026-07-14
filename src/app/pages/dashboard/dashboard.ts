@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SidebarComponent } from '../../components/sidebar/sidebar';
-import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
+import { StatusType } from '../../components/status-template/status-template';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, SidebarComponent, StatusTemplateComponent],
+  imports: [CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'] 
 })

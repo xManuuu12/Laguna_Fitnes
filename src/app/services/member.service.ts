@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Member } from '../models/member.interface';
 import { ApiResponse } from '../models/api-response.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://fit-manager-backend.vercel.app/api/members';
+  private apiUrl = `${environment.apiUrl}members`;
 
   getAllMembers(page: number = 1, limit: number = 1000): Observable<ApiResponse<Member[]>> {
     return this.http.get<ApiResponse<Member[]>>(`${this.apiUrl}?page=${page}&limit=${limit}`);

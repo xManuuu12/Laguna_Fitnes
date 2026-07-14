@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 import { Visit } from '../models/visit.interface';
 import { ApiResponse } from '../models/api-response.interface';
 import { toLocalISODate } from '../utils/date.util';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VisitService {
   private http = inject(HttpClient);
-  // Asegúrate de que este puerto coincida con tu backend FitManagerBackend
-  private apiUrl = 'https://fit-manager-backend.vercel.app/api/visitas'; 
+  private apiUrl = `${environment.apiUrl}visitas`;
 
   /**
    * Obtener todas las visitas (Historial)

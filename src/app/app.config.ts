@@ -6,18 +6,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withHashLocation()), 
+    provideRouter(routes, withHashLocation()),
     provideHttpClient(
       withInterceptors([authInterceptor]),
       withFetch()
     ),
     provideCharts(withDefaultRegisterables()),
-    provideAnimationsAsync(),
-    provideClientHydration(withEventReplay())
+    provideAnimationsAsync()
   ]
 };

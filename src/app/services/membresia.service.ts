@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Membresia } from '../models/membresia.interface';
 import { ApiResponse } from '../models/api-response.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MembresiaService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://fit-manager-backend.vercel.app/api/membresias';
+  private apiUrl = `${environment.apiUrl}membresias`;
 
   getAllMembresias(): Observable<ApiResponse<Membresia[]>> {
     return this.http.get<ApiResponse<Membresia[]>>(this.apiUrl);
