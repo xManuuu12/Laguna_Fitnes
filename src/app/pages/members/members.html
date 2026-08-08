@@ -75,6 +75,9 @@
               <span class="validity-end" [ngClass]="{'text-red': !member.fecha_vencimiento}">
                 {{ member.fecha_vencimiento ? 'Vence: ' + (member.fecha_vencimiento | date:'dd/MM/yyyy') : 'Sin pagos' }}
               </span>
+              @if (member.fecha_pago) {
+                <span class="registration-date">Pago el: {{ member.fecha_pago | date:'dd/MM/yyyy' }}</span>
+              }
             </div>
           </td>
         </ng-container>

@@ -9,5 +9,6 @@ export interface Member {
   estado: 'activo' | 'vencido';
   fecha_registro?: string;
   fecha_vencimiento?: string; // Nueva propiedad para la tabla
+  fecha_pago?: string;
   Payments?: Payment[];
 }
