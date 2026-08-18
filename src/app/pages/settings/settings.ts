@@ -14,6 +14,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MembresiaService } from '../../services/membresia.service';
 import { AuthService } from '../../services/auth.service';
+import { GimnasioService } from '../../services/gimnasio.service';
 import { Membresia } from '../../models/membresia.interface';
 import { User } from '../../models/auth.interface';
 import { StatusTemplateComponent, StatusType } from '../../components/status-template/status-template';
@@ -45,6 +46,7 @@ export class SettingsComponent implements OnInit {
   private fb = inject(FormBuilder);
   private membresiaService = inject(MembresiaService);
   private authService = inject(AuthService);
+  private gimnasioService = inject(GimnasioService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
 
@@ -69,6 +71,9 @@ export class SettingsComponent implements OnInit {
   userForm: FormGroup;
   editingUserId: number | null = null;
 
+  // Gimnasio (precio de inscripción)
+  gimnasioForm: FormGroup;
+
   constructor() {
     this.membresiaForm = this.fb.group({
       nombre: ['', [Validators.required]],
@@ -82,6 +87,10 @@ export class SettingsComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       rol: ['recepcion', [Validators.required]]
     });
+
+    this.gimnasioForm = this.fb.group({
+      precio_inscripcion: [null, [Validators.required, Validators.min(0)]]
+    });
   }
 
   ngOnInit() {
@@ -92,6 +101,29 @@ export class SettingsComponent implements OnInit {
     this.status = 'loading';
     this.loadMembresias();
     this.loadUsers();
+    this.loadGimnasio();
+  }
+
+  // --- Gimnasio ---
+  loadGimnasio() {
+    this.gimnasioService.getGimnasio().subscribe({
+      next: (res) => {
+        if (res.success && res.data) {
+          this.gimnasioForm.patchValue({ precio_inscripcion: res.data.precio_inscripcion });
+        }
+      }
+    });
+  }
+
+  onSubmitGimnasio() {
+    if (this.gimnasioForm.invalid) return;
+
+    this.gimnasioService.updateGimnasio({ precio_inscripcion: this.gimnasioForm.value.precio_inscripcion }).subscribe({
+      next: () => {
+        this.snackBar.open('Precio de inscripción actualizado', 'Cerrar', { duration: 3000 });
+      },
+      error: (err) => this.showError(err, 'No se pudo actualizar el precio de inscripción')
+    });
   }
 
   // --- Membresías ---

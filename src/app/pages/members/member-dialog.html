@@ -59,6 +59,10 @@
             Debe seleccionar un método de pago
           </mat-error>
         </mat-form-field>
+
+        <mat-checkbox *ngIf="!isEditMode" formControlName="incluir_inscripcion" color="primary">
+          Incluir precio de inscripción
+        </mat-checkbox>
       </div>
     </div>
   </form>

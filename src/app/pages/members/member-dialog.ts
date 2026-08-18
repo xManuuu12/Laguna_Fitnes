@@ -41,7 +41,10 @@ export class MemberDialogComponent implements OnInit {
     // Campos para el pago inicial (opcionales)
     registrar_pago: [false],
     id_membresia: [null],
-    metodo_pago: ['efectivo']
+    metodo_pago: ['efectivo'],
+    // Solo relevante en alta (no en edición): suma el precio de inscripción
+    // del gimnasio al primer pago del socio (el backend calcula el monto).
+    incluir_inscripcion: [false]
   });
 
   membresias: Membresia[] = [];

@@ -14,6 +14,28 @@
         </ng-template>
 
         <div class="tab-content">
+          <!-- Configuración General del Gimnasio -->
+          <div class="card gimnasio-card">
+            <div class="card-header">
+              <h2 class="card-title">Precio de Inscripción</h2>
+            </div>
+            <div class="card-content">
+              <form [formGroup]="gimnasioForm" (ngSubmit)="onSubmitGimnasio()" class="settings-form gimnasio-form">
+                <mat-form-field appearance="outline">
+                  <mat-label>Precio de Inscripción</mat-label>
+                  <input matInput type="number" formControlName="precio_inscripcion" placeholder="0.00">
+                </mat-form-field>
+
+                <div class="form-actions">
+                  <button mat-flat-button class="btn-primary" [disabled]="gimnasioForm.invalid">
+                    <mat-icon>save</mat-icon>
+                    Guardar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
           <div class="settings-grid">
             <!-- Formulario Card -->
             <div class="card">

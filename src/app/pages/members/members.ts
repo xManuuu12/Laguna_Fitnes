@@ -15,6 +15,7 @@ import { PaymentService } from '../../services/payment.service';
 import { MembresiaService } from '../../services/membresia.service';
 import { Member } from '../../models/member.interface';
 import { Membresia } from '../../models/membresia.interface';
+import { Payment } from '../../models/payment.interface';
 import { MemberDialogComponent } from './member-dialog';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { toLocalISODate } from '../../utils/date.util';
@@ -180,12 +181,12 @@ export class MembersComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const { registrar_pago, id_membresia, metodo_pago, ...memberData } = result;
-        
+        const { registrar_pago, id_membresia, metodo_pago, incluir_inscripcion, ...memberData } = result;
+
         this.memberService.createMember(memberData).subscribe({
           next: (response) => {
             if (registrar_pago && response.data?.id_miembro && id_membresia) {
-              this.registerInitialPayment(response.data.id_miembro, id_membresia, metodo_pago);
+              this.registerInitialPayment(response.data.id_miembro, id_membresia, metodo_pago, 'Miembro y pago inicial registrados', incluir_inscripcion);
             } else {
               this.snackBar.open('Miembro creado correctamente', 'Cerrar', { duration: 3000 });
               this.loadMembers();
@@ -200,19 +201,20 @@ export class MembersComponent implements OnInit, AfterViewInit {
     });
   }
 
-  registerInitialPayment(id_miembro: number, id_membresia: number, metodo_pago: any, successMessage: string = 'Miembro y pago inicial registrados') {
+  registerInitialPayment(id_miembro: number, id_membresia: number, metodo_pago: Payment['metodo_pago'], successMessage: string = 'Miembro y pago inicial registrados', incluir_inscripcion: boolean = false) {
     this.membresiaService.getAllMembresias().subscribe(response => {
       const membresia = response.data?.find(m => m.id_membresia === id_membresia);
       if (membresia) {
         const fechaVencimiento = new Date();
         fechaVencimiento.setDate(fechaVencimiento.getDate() + membresia.duracion_dias);
 
-        const payment: any = {
+        const payment: Payment = {
           id_miembro,
           id_membresia,
           monto: membresia.precio,
           metodo_pago,
-          fecha_vencimiento: toLocalISODate(fechaVencimiento) // fecha local, NO UTC
+          fecha_vencimiento: toLocalISODate(fechaVencimiento), // fecha local, NO UTC
+          incluir_inscripcion
         };
 
         this.paymentService.createPayment(payment).subscribe({
@@ -238,8 +240,8 @@ export class MembersComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && member.id_miembro) {
-        const { registrar_pago, id_membresia, metodo_pago, ...memberData } = result;
-        
+        const { registrar_pago, id_membresia, metodo_pago, incluir_inscripcion, ...memberData } = result;
+
         this.memberService.updateMember(member.id_miembro, memberData).subscribe({
           next: () => {
             if (registrar_pago && id_membresia) {

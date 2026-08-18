@@ -6,4 +6,5 @@ export interface Payment {
   metodo_pago: 'efectivo' | 'transferencia' | 'tarjeta';
   fecha_vencimiento: string;
   fecha_pago?: string;
+  incluir_inscripcion?: boolean;
 }
